@@ -27,7 +27,7 @@ with open('../data/race_ratings.csv', 'r') as race_ratings_file:
         if race_id:
             row['raceId'] = race_id
         else:
-            print(f"Race ID for '{race_name}' not found.")
+            print(f"Race ID for '{(year, race_name)}' not found.")
             exit(1)
         updated_rows.append(row)
 

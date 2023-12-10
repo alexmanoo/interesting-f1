@@ -5,3 +5,4 @@ channels:
 dependencies:
   - python=3.10
   - fastf1
+  - pandas
