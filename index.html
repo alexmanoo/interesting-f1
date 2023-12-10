@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<body>
 
-    <div id="safety_stackedbarchart"></div>
-    <div id="time_diffs"></div>
+<head>
+  <meta charset="utf-8" />
+  
 
-
-    <script src="d3.v7.js"></script>
-
+  <script src="d3.v7.js"></script>
+  <!-- Dependencies -->
+  <!-- <script src="https://d3js.org/d3.v5.min.js"></script> -->
+  <script src="js/slider.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/safety.js"></script>
-    <script src="js/field-spread.js"></script>
+  <script src="js/safety.js"></script>
+  <script src="js/field-spread.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <style type="text/css">
+    #slider-container {
+      position: relative;
+      height: 30px;
+      background-color: #eeeef5;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div id="slider-container"></div>
+
+  <script type="text/javascript">
+    var slider = createD3RangeSlider(0, 100, "#slider-container");
+ </script>
+  <div id="safety_stackedbarchart"></div>
+  <div id="time_diffs"></div>
+
+
 
 </body>

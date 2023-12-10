@@ -8,16 +8,16 @@ let max_rating = 10;
 
 let csv_data = Promise.all([
   d3.csv(
-    "https://raw.githubusercontent.com/alexmanoo/interesting-f1/sc-rf-sp/data/races.csv"
+    "../data/races.csv"
   ),
   d3.csv(
-    "https://raw.githubusercontent.com/alexmanoo/interesting-f1/sc-rf-sp/data/race_ratings_with_race_ids.csv"
+    "../data/race_ratings_with_race_ids.csv"
   ),
   d3.csv(
-    "https://raw.githubusercontent.com/alexmanoo/interesting-f1/sc-rf-sp/data/safety_cars_with_race_ids.csv"
+    "../data/safety_cars_with_race_ids.csv"
   ),
   d3.csv(
-    "https://raw.githubusercontent.com/alexmanoo/interesting-f1/sc-rf-sp/data/red_flags_with_race_ids.csv"
+    "../data/red_flags_with_race_ids.csv"
   ),
   d3.csv(
     "../data/time_diffs.csv"
