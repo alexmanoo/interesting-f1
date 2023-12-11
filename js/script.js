@@ -1,5 +1,7 @@
 let races;
 let race_ratings;
+// races_dict containing race details (from races.csv) and ratings
+let races_dict;
 let safety_cars;
 let red_flags;
 let time_diffs;
@@ -32,12 +34,23 @@ let csv_data = Promise.all([
   // Take only first 5000 data points
   // time_diffs = time_diffs.slice(10000, 10700);
   // Provide types for each column for all data
+  console.log(time_diffs[0])
   time_diffs.forEach(function (d) {
     d.raceId = +d.raceId;
     d.lap = +d.lap;
     d.p1_p2 = +d.p1_p2;
+    d.p2_p3 = +d.p2_p3;
+    d.p1_last = +d.p1_last;
+  });
+  console.log(time_diffs[0])
+  safety_cars.forEach(function (d) {
+    d.raceId = +d.raceId;
+    d.count = +d.count;
   });
 
+
+
+  races_dict = createRacesDict();
   initSlider();
 });
 
@@ -51,4 +64,19 @@ function onChangeSlider(newRange) {
   d3.select("#range-label").text(newRange.begin + " - " + newRange.end);
   min_rating = newRange.begin;
   max_rating = newRange.end;
+}
+
+function createRacesDict() {
+  // Take races data and create a dictionary with raceId as key
+  let r_dict = {};
+  races.forEach(function (d) {
+    r_dict[d.raceId] = d;
+  });
+
+  race_ratings.forEach(function (d) {
+    // Add race rating to r_dict for races that have a rating
+    r_dict[d.raceId].rating = +d["RATING"];
+  })
+
+  return r_dict;
 }

@@ -1,12 +1,11 @@
 csv_data.then(() => {
   // Initialize data and graph
-  let safetyData = loadSafetyData();
-  console.log(safetyData);
+  let safetyData = loadSafetyData(min_rating, max_rating);
 
   // Setup graph dimensions and margins
   const graphDimensions = {
     margin: { top: 10, right: 30, bottom: 20, left: 50 },
-    width: 460,
+    width: 1700,
     height: 400,
   };
   const { width, height, margin } = graphDimensions;
@@ -14,7 +13,7 @@ csv_data.then(() => {
   const adjustedHeight = height - margin.top - margin.bottom;
 
   // Initialize SVG canvas
-  const svg = initializeSVGCanvas(
+  const svg = initializeSafetyCanvas(
     "#safety_stackedbarchart",
     adjustedWidth,
     adjustedHeight,
@@ -30,23 +29,23 @@ csv_data.then(() => {
   // Initialize Axes
   const xScale = d3.scaleBand().range([0, adjustedWidth]).padding(0.2);
   const yScale = d3.scaleLinear().range([adjustedHeight, 0]);
-  initializeAxes(svg, adjustedHeight, xScale, yScale);
+  initializeSafetyAxes(svg, adjustedHeight, xScale, yScale);
 
   // Initialize Tooltip
-  const tooltip = initializeTooltip("#safety_stackedbarchart");
+  const tooltip = initializeSafetyTooltip("#safety_stackedbarchart");
 
   // Create and update the graph
-  updateGraph(safetyData, svg, colorPalette, xScale, yScale, tooltip);
+  updateSafetyChart(safetyData, svg, colorPalette, xScale, yScale, tooltip);
 
   // Slider event handling
   slider.onChange((newRange) => {
     safetyData = loadSafetyData(newRange.begin, newRange.end);
-    updateGraph(safetyData, svg, colorPalette, xScale, yScale, tooltip);
+    updateSafetyChart(safetyData, svg, colorPalette, xScale, yScale, tooltip);
   });
 });
 
 // Functions for initializing SVG, Axes, Tooltip, and Graph Update
-function initializeSVGCanvas(selector, width, height, margin) {
+function initializeSafetyCanvas(selector, width, height, margin) {
   return d3
     .select(selector)
     .append("svg")
@@ -56,15 +55,19 @@ function initializeSVGCanvas(selector, width, height, margin) {
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 }
 
-function initializeAxes(svg, height, xScale, yScale) {
+function initializeSafetyAxes(svg, height, xScale, yScale) {
   svg
     .append("g")
     .attr("transform", `translate(0, ${height})`)
-    .attr("class", "x-axis");
-  svg.append("g").attr("class", "y-axis");
+    .attr("class", "x-axis")
+    .call(d3.axisBottom(xScale));
+  svg
+    .append("g")
+    .attr("class", "y-axis")
+    .call(d3.axisLeft(yScale).tickFormat(d3.format("d")));
 }
 
-function initializeTooltip(selector) {
+function initializeSafetyTooltip(selector) {
   return d3
     .select(selector)
     .append("div")
@@ -78,7 +81,7 @@ function initializeTooltip(selector) {
     .style("width", "120px");
 }
 
-function updateGraph(data, svg, color, xScale, yScale, tooltip) {
+function updateSafetyChart(data, svg, color, xScale, yScale, tooltip) {
   // Update the X and Y axes
   const raceNames = Array.from(new Set(data.map((d) => d.race_name)));
   xScale.domain(raceNames);
@@ -107,13 +110,13 @@ function updateGraph(data, svg, color, xScale, yScale, tooltip) {
     .attr("width", xScale.bandwidth())
     .attr("y", (d) => yScale(d[1]))
     .attr("height", (d) => yScale(d[0]) - yScale(d[1]))
-    .on("mouseover", (event, d) => mouseoverHandler(event, d, tooltip))
-    .on("mousemove", (event, d) => mousemoveHandler(event, d, tooltip))
-    .on("mouseleave", () => mouseleaveHandler(tooltip));
+    .on("mouseover", (event, d) => mouseoverHandlerSafety(event, d, tooltip))
+    .on("mousemove", (event, d) => mousemoveHandlerSafety(event, d, tooltip))
+    .on("mouseleave", () => mouseleaveHandlerSafety(tooltip));
 }
 
 // Mouse event handlers for the tooltip
-function mouseoverHandler(event, data, tooltip) {
+function mouseoverHandlerSafety(event, data, tooltip) {
   const subgroupName = d3.select(event.currentTarget.parentNode).datum().key;
   const subgroupValue = data.data[subgroupName];
   tooltip
@@ -121,14 +124,14 @@ function mouseoverHandler(event, data, tooltip) {
     .style("opacity", 1);
 }
 
-function mousemoveHandler(event, data, tooltip) {
+function mousemoveHandlerSafety(event, data, tooltip) {
   tooltip
     .style("transform", "translateY(-55%)")
     .style("left", `${event.x / 4}px`)
     .style("top", `${event.y / 4 - 30}px`);
 }
 
-function mouseleaveHandler(tooltip) {
+function mouseleaveHandlerSafety(tooltip) {
   tooltip.style("opacity", 0);
 }
 
@@ -163,7 +166,7 @@ function loadSafetyData(min_rating = 0, max_rating = 10) {
 
   const combineSafetyCarsAndRedFlags = (safetyCars, redFlags) => {
     return safetyCars.map((sc) => ({
-      race_name: sc.race_name,
+      race_name: sc.race_name.replace("Grand Prix", "GP").trim(),
       safety_car: sc.count,
       red_flag: (
         redFlags.find((rf) => rf.race_name === sc.race_name) || { count: 0 }
