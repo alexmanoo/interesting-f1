@@ -25,7 +25,7 @@ function createD3RangeSlider(
 
   var minWidth = 10;
 
-  var sliderRange = { begin: rangeMin, end: rangeMin + 10 };
+  var sliderRange = { begin: rangeMin, end: rangeMax };
   var changeListeners = [];
   var touchEndListeners = [];
   var container = d3.select(containerSelector);
@@ -166,12 +166,14 @@ function createD3RangeSlider(
       var uislope = (rangeMax - rangeMin - rangeW) / (conW - uirangeW);
     }
     var rangeL = rangeMin + uislope * uirangeL;
-    sliderRange.begin = Math.round(rangeL);
-    sliderRange.end = Math.round(rangeL + rangeW);
+    // sliderRange.begin = Math.round(rangeL);
+    sliderRange.begin = rangeL;
+    // sliderRange.end = Math.round(rangeL + rangeW);
+    sliderRange.end = rangeL + rangeW;
 
     //Fire change listeners
     changeListeners.forEach(function (callback) {
-      callback({ begin: sliderRange.begin, end: sliderRange.end });
+      callback({ begin: sliderRange.begin.toFixed(2), end: sliderRange.end.toFixed(2) });
     });
   }
 
@@ -282,8 +284,10 @@ var dragResizeW = d3
       conWidth - sliderWidth,
       Math.max(x - sliderWidth / 2, 0)
     );
-    props.left = Math.round(props.left);
-    props.width = Math.round(props.width);
+    // props.left = Math.round(props.left);
+    props.left = props.left;
+    // props.width = Math.round(props.width);
+    props.width = props.width;
     slider.style("left", props.left + "px").style("width", props.width + "px");
     updateRangeFromUI();
   });

@@ -5,6 +5,7 @@ let red_flags;
 let time_diffs;
 let min_rating = 0;
 let max_rating = 10;
+let slider;
 
 let csv_data = Promise.all([
   d3.csv(
@@ -29,11 +30,25 @@ let csv_data = Promise.all([
   red_flags = data[3];
   time_diffs = data[4];
   // Take only first 5000 data points
-  time_diffs = time_diffs.slice(10000, 10700);
+  // time_diffs = time_diffs.slice(10000, 10700);
   // Provide types for each column for all data
   time_diffs.forEach(function (d) {
     d.raceId = +d.raceId;
     d.lap = +d.lap;
     d.p1_p2 = +d.p1_p2;
   });
+
+  initSlider();
 });
+
+function initSlider() {
+  slider = createD3RangeSlider(0, 10, "#slider-container");
+  d3.select("#range-label").text(slider.range().begin + " - " + slider.range().end);
+  slider.onChange(onChangeSlider);
+}
+
+function onChangeSlider(newRange) {
+  d3.select("#range-label").text(newRange.begin + " - " + newRange.end);
+  min_rating = newRange.begin;
+  max_rating = newRange.end;
+}

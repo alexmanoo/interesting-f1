@@ -2,6 +2,12 @@
     background-color: #f2f2f9;
 }
 
+#slider-container {
+    position: relative;
+    height: 30px;
+    background-color: #eeeef5;
+  }
+
 .slider {
     position: absolute;
     border: 1px solid #AAB;
@@ -51,4 +57,8 @@
     fill: #BCE;
     stroke: #AAB;
     stroke-width: 1;
+}
+
+#range-label {
+    text-align: center;
 }

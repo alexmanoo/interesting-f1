@@ -1,65 +1,6 @@
 csv_data.then(() => {
   let safetyData = updateSafetyData();
 
-  function updateSafetyData() {
-    let filteredSafetyCars = safety_cars
-      .filter(function (d) {
-        return (
-          parseFloat(d.rating) != NaN &&
-          parseFloat(d.rating) >= min_rating &&
-          parseFloat(d.rating) <= max_rating
-        );
-      })
-      .sort((a, b) => a.rating - b.rating);
-
-    // Calculate the number of safety cars per race_name
-    let safetyCarsDetailsPerRace = Object.groupBy(
-      filteredSafetyCars,
-      ({ race_name }) => race_name
-    );
-
-    let safetyCarsPerRace = Object.entries(safetyCarsDetailsPerRace).map(
-      ([r, details]) => {
-        return { race_name: r, safety_cars: details.length };
-      }
-    );
-
-    let filteredRedFlags = red_flags.filter(function (d) {
-      return (
-        parseFloat(d.rating) != NaN &&
-        parseFloat(d.rating) >= min_rating &&
-        parseFloat(d.rating) <= max_rating
-      );
-    });
-
-    let redFlagsDetailsPerRace = Object.groupBy(
-      filteredRedFlags,
-      ({ race_name }) => race_name
-    );
-    let redFlagsPerRace = Object.entries(redFlagsDetailsPerRace).map(
-      ([r, details]) => {
-        return { race_name: r, red_flags: details.length };
-      }
-    );
-
-    let safetyData = safetyCarsPerRace.map((d) => {
-      return {
-        race_name: d.race_name,
-        safety_car: d.safety_cars,
-        red_flag: redFlagsPerRace.filter((r) => r.race_name == d.race_name)
-          .length,
-      };
-    });
-
-    return safetyData;
-  }
-
-  function getSubgroupData() {
-    // Group safetyData by race_name
-    let groupedData = d3.group(safetyData, (d) => d.race_name);
-    return groupedData;
-  }
-
   // set the dimensions and margins of the graph
   var margin = { top: 10, right: 30, bottom: 20, left: 50 },
     width = 460 - margin.left - margin.right,
@@ -153,4 +94,66 @@ csv_data.then(() => {
     .on("mouseover", mouseover)
     .on("mousemove", mousemove)
     .on("mouseleave", mouseleave);
+
+  function updateSafetyData() {
+    let filteredSafetyCars = safety_cars
+      .filter(function (d) {
+        return (
+          parseFloat(d.rating) != NaN &&
+          parseFloat(d.rating) >= min_rating &&
+          parseFloat(d.rating) <= max_rating
+        );
+      })
+      .sort((a, b) => a.rating - b.rating);
+
+    // Calculate the number of safety cars per race_name
+    let safetyCarsDetailsPerRace = Object.groupBy(
+      filteredSafetyCars,
+      ({ race_name }) => race_name
+    );
+
+    let safetyCarsPerRace = Object.entries(safetyCarsDetailsPerRace).map(
+      ([r, details]) => {
+        return { race_name: r, safety_cars: details.length };
+      }
+    );
+
+    let filteredRedFlags = red_flags.filter(function (d) {
+      return (
+        parseFloat(d.rating) != NaN &&
+        parseFloat(d.rating) >= min_rating &&
+        parseFloat(d.rating) <= max_rating
+      );
+    });
+
+    let redFlagsDetailsPerRace = Object.groupBy(
+      filteredRedFlags,
+      ({ race_name }) => race_name
+    );
+    let redFlagsPerRace = Object.entries(redFlagsDetailsPerRace).map(
+      ([r, details]) => {
+        return { race_name: r, red_flags: details.length };
+      }
+    );
+
+    let safetyData = safetyCarsPerRace.map((d) => {
+      return {
+        race_name: d.race_name,
+        safety_car: d.safety_cars,
+        red_flag: redFlagsPerRace.filter((r) => r.race_name == d.race_name)
+          .length,
+      };
+    });
+
+    return safetyData;
+  }
+
+  function updateGraph(safetyData) {
+  }
+
+  slider.onChange(function (newRange) {
+    onChangeSlider(newRange);
+    safetyData = updateSafetyData();
+    updateGraph(safetyData);
+  });
 });
