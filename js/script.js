@@ -25,12 +25,16 @@ let csv_data = Promise.all([
   d3.csv(
     "../data/time_diffs.csv"
   ),
+  d3.csv(
+    "../clean_data/tire_types.csv"
+  ),
 ]).then(function (data) {
   races = data[0];
   race_ratings = data[1];
   safety_cars = data[2];
   red_flags = data[3];
   time_diffs = data[4];
+  tire_types = data[5];
   // Take only first 5000 data points
   // time_diffs = time_diffs.slice(10000, 10700);
   // Provide types for each column for all data

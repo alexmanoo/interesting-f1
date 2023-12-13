@@ -62,3 +62,10 @@
 #range-label {
     text-align: center;
 }
+
+#chart {
+    display: block;
+    margin: 20px auto 0;
+    height: 400px;
+    width: 400px;
+    }
