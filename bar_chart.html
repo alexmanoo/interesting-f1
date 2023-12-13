@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bar Chart</title>
+  <style>
+    .bar {
+      fill: steelblue;
+    }
+  </style>
+</head>
+<body>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script>
+    // Load the data from results_with_champ_positions.csv
+    d3.csv("data/results_with_champ_pos.csv").then(function(data) {
+      // Prepare the data for the bar chart
+      var chartData = [
+        {
+          driver: "Number 1",
+          count: d3.sum(data, function(d) {
+            return d.position === "1" && d.champ_pos === "1" ? 1 : 0;
+          })
+        },
+        {
+          driver: "Number 2",
+          count: d3.sum(data, function(d) {
+            return d.position === "1" && d.champ_pos === "2" ? 1 : 0;
+          })
+        },
+        {
+          driver: "Number 3",
+          count: d3.sum(data, function(d) {
+            return d.position === "1" && d.champ_pos === "3" ? 1 : 0;
+          })
+        },
+        {
+          driver: "Rest",
+          count: d3.sum(data, function(d) {
+            return d.position === "1" && (d.champ_pos !== "1" && d.champ_pos !== "2" && d.champ_pos !== "3") ? 1 : 0;
+          })
+        }
+      ];
+
+      // Set up the SVG container and center it horizontally
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", 400)
+            .attr("height", 320)
+            .append("g")
+            .attr("transform", "translate(50, 50)");
+
+      // Set up the scales
+      var xScale = d3.scaleBand()
+        .domain(chartData.map(function(d) { return d.driver; }))
+        .range([0, 300])
+        .padding(0.1);
+
+      var yScale = d3.scaleLinear()
+        .domain([0, d3.max(chartData, function(d) { return d.count; })])
+        .range([250, 0]);
+
+      // Draw the bars
+      svg.selectAll(".bar")
+        .data(chartData)
+        .enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d) { return xScale(d.driver); })
+        .attr("y", function(d) { return yScale(d.count); })
+        .attr("width", xScale.bandwidth())
+        .attr("height", function(d) { return 250 - yScale(d.count); });
+
+      // Add the X Axis
+        svg.append("g")
+            .attr("transform", "translate(0, 250)")
+            .call(d3.axisBottom(xScale));
+
+        // Add the Y Axis
+        svg.append("g")
+            .call(d3.axisLeft(yScale));
+
+    });
+  </script>
+</body>
+</html>
