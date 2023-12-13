@@ -34,10 +34,8 @@ csv_data.then(() => {
         .style("font-weight", "bold") // Add bold style
         .text("Overtakes Count for Selected IDs");
 
-    // d3.csv("data/overtakes_with_ids.csv").then(function (data) {
-    var filteredData = overtakes.filter(function (d) {
-        return desiredIDs.includes(d.ID);
-    });
+    var filteredData;
+
     function updateHistrogram(suck) {
         // Listen to the slider?
         var bins = suck;
@@ -162,7 +160,7 @@ csv_data.then(() => {
 
         svg.append("g")
 
-            .transition()
+            // .transition()
             .call(d3.axisLeft(y));
 
         // Adjust font size for x-axis tick labels
@@ -172,8 +170,9 @@ csv_data.then(() => {
     function changeRaceList() {
         // Filter data based on desired IDs
         filteredData = overtakes.filter(function (d) {
-            return d.ID;
+            return current_raceIds.includes(d.ID);
         });
+        updateHistrogram(12);
     }
     changeRaceList();
     updateHistrogram(12);
@@ -182,4 +181,8 @@ csv_data.then(() => {
     //     updateHistrogram(this.value);
     // });
     // });
+
+    slider.onChange(() => {
+        changeRaceList();
+    });
 });

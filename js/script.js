@@ -11,6 +11,7 @@ let slider;
 let current_raceIds;
 let overtakes;
 let pitstops;
+let tire_types;
 
 let csv_data = Promise.all([
     d3.csv("../data/races.csv"),
@@ -20,6 +21,7 @@ let csv_data = Promise.all([
     d3.csv("../data/time_diffs.csv"),
     d3.csv("../data/overtakes_with_ids.csv"),
     d3.csv("../data/pit_stops_total.csv"),
+    d3.csv("../clean_data/tire_types.csv"),
 ]).then(function (data) {
     races = data[0];
     race_ratings = data[1];
@@ -28,6 +30,9 @@ let csv_data = Promise.all([
     time_diffs = data[4];
     overtakes = data[5];
     pitstops = data[6];
+    tire_types = data[7];
+
+
     // Take only first 5000 data points
     // time_diffs = time_diffs.slice(10000, 10700);
     // Provide types for each column for all data
@@ -58,6 +63,7 @@ let csv_data = Promise.all([
     // });
 
     races_dict = createRacesDict();
+    current_raceIds = getFilteredRaceIds(min_rating, max_rating);
     initSlider();
 });
 
@@ -73,15 +79,7 @@ function onChangeSlider(newRange) {
     d3.select("#range-label").text(newRange.begin + " - " + newRange.end);
     min_rating = newRange.begin;
     max_rating = newRange.end;
-
-    // // Get the indices from races.csv that have a rating between min_rating and max_rating
-    // races.forEach(function (d) {
-    //   if (d.rating >= min_rating && d.rating <= max_rating) {
-
-    //   } else {
-    //     d.show = false;
-    //   }
-    // }
+    current_raceIds = getFilteredRaceIds(min_rating, max_rating);
 }
 
 function createRacesDict() {
@@ -97,16 +95,23 @@ function createRacesDict() {
     });
 
     return r_dict;
+}
 
-    function getFilteredRaceIds(min_rating, max_rating) {
-        let res = [];
+function getFilteredRaceIds(min_rating, max_rating) {
+    let res = [];
 
-        races_dict.forEach(function (d) {
-            if (d.rating >= min_rating && d.rating <= max_rating) {
-                res.push(d.raceId);
-            }
-        });
-
-        return res;
+    for (const [raceId, race_details] of Object.entries(races_dict)) {
+      if (race_details.rating >= min_rating && race_details.rating <= max_rating) {
+        res.push(+raceId);
+      }
     }
+
+    // races_dict.forEach(function (d) {
+    //     if (d.rating >= min_rating && d.rating <= max_rating) {
+    //       console.log(d["raceId"].raceId)
+    //         res.push(d["raceId"].raceId);
+    //     }
+    // });
+
+    return res;
 }
