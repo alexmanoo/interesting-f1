@@ -8,6 +8,7 @@ let time_diffs;
 let min_rating = 0;
 let max_rating = 10;
 let slider;
+let current_raceIds;
 
 let csv_data = Promise.all([
   d3.csv(
@@ -64,6 +65,15 @@ function onChangeSlider(newRange) {
   d3.select("#range-label").text(newRange.begin + " - " + newRange.end);
   min_rating = newRange.begin;
   max_rating = newRange.end;
+
+  // // Get the indices from races.csv that have a rating between min_rating and max_rating
+  // races.forEach(function (d) {
+  //   if (d.rating >= min_rating && d.rating <= max_rating) {
+      
+  //   } else {
+  //     d.show = false;
+  //   }
+  // }
 }
 
 function createRacesDict() {
@@ -79,4 +89,17 @@ function createRacesDict() {
   })
 
   return r_dict;
+
+
+  function getFilteredRaceIds(min_rating, max_rating) {
+    let res = []
+
+    races_dict.forEach(function (d) {
+      if (d.rating >= min_rating && d.rating <= max_rating) {
+        res.push(d.raceId);
+      }
+    });
+
+    return res;
+  }
 }
