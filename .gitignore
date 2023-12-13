@@ -1,1 +1,4 @@
 .DS_Store
+./.vscode
+./.prettierrc
+./data_hierarchy_1level.csv

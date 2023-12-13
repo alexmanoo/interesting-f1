@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 
 <head>
-  <meta charset="utf-8" />
+    <meta charset="utf-8" />
 
-  <!-- Dependencies -->
-  <script src="d3.v7.js"></script>
-  <script src="js/slider.js"></script>
-  <script src="js/script.js"></script>
-  <script src="js/safety-2.js"></script>
-  <script src="js/field-spread-2.js"></script>
-  
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="style.css" />
+    <!-- Dependencies -->
+    <script src="d3.v7.js"></script>
+    <script src="js/slider.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/safety-2.js"></script>
+    <script src="js/field-spread-2.js"></script>
+    <script src="js/overtakes.js"></script>
+    <script src="js/pitstops.js"></script>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-  <div id="slider-container"></div>
-  <div id="range-label"></div>
-  <div id="safety_stackedbarchart"></div>
-  <button id="btn-p1-p2">P1 - P2</button>
-<button id="btn-p2-p3">P2 - P3</button>
-<button id="btn-p1-last">P1 - Last</button>
-  <div id="time_diffs"></div>
-  
+    <div id="slider-container"></div>
+    <div id="range-label"></div>
+    <div id="safety_stackedbarchart"></div>
+    <button id="btn-p1-p2">P1 - P2</button>
+    <button id="btn-p2-p3">P2 - P3</button>
+    <button id="btn-p1-last">P1 - Last</button>
+    <div id="time_diffs"></div>
+    <div id="overtakes">
+      <div id="tooltip" style="position: absolute; opacity: 0"></div>
+    </div>
+    <div id="pitstops">
+      <div id="tooltip" style="position: absolute; opacity: 0"></div>
+    </div>
 </body>
