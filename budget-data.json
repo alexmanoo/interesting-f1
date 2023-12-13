@@ -1,0 +1,189 @@
+{
+  "total_finishes": {
+    "name": "total_finishes",
+    "rate": 0,
+    "children": [
+      {
+        "name": "Finished",
+        "rate": 0,
+        "value": 6.8
+      },
+      {
+        "name": "dnf",
+        "rate": 0,
+        "children": [
+          {
+            "name": "Disqualifications",
+            "rate": 0,
+            "children": [
+              {
+                "name": "Disqualified",
+                "rate": 0,
+                "value": 8.2
+              }
+            ]
+          },
+          {
+            "name": "Accidents",
+            "rate": 0,
+            "children": [
+              {
+                "name": "Accident",
+                "rate": 0,
+                "value": 4.5
+              },
+              {
+                "name": "Collision",
+                "rate": 0,
+                "value": 2.3
+              },
+              {
+                "name": "Spun off",
+                "rate": 0,
+                "value": 7.1
+              }
+            ]
+          },
+          {
+            "name": "Technical Issues",
+            "rate": 0,
+            "children": [
+              {
+                "name": "Engine",
+                "rate": 0,
+                "value": 9.8
+              },
+              {
+                "name": "Gearbox",
+                "rate": 0,
+                "value": 1.4
+              },
+              {
+                "name": "Transmission",
+                "rate": 0,
+                "value": 3.6
+              },
+              {
+                "name": "Clutch",
+                "rate": 0,
+                "value": 5.2
+              },
+              {
+                "name": "Hydraulics",
+                "rate": 0,
+                "value": 6.7
+              },
+              {
+                "name": "Electrical",
+                "name": "Electrical",
+                "rate": 0,
+                "value": 0.9
+              },
+              {
+                "name": "Radiator",
+                "rate": 0,
+                "value": 2.1
+              },
+              {
+                "name": "Suspension",
+                "rate": 0,
+                "value": 8.5
+              },
+              {
+                "name": "Brakes",
+                "rate": 0,
+                "value": 7.8
+              },
+              {
+                "name": "Differential",
+                "rate": 0,
+                "value": 1.7
+              },
+              {
+                "name": "Overheating",
+                "rate": 0,
+                "value": 0.4
+              },
+              {
+                "name": "Mechanical",
+                "rate": 0,
+                "value": 4.3
+              },
+              {
+                "name": "Tyre",
+                "rate": 0,
+                "value": 9.0
+              },
+              {
+                "name": "Driver Seat",
+                "rate": 0,
+                "value": 2.8
+              },
+              {
+                "name": "Puncture",
+                "rate": 0,
+                "value": 7.6
+              },
+              {
+                "name": "Driveshaft",
+                "rate": 0,
+                "value": 3.2
+              }
+            ]
+          },
+          {
+            "name": "Laps Completed",
+            "rate": 0,
+            "children": [
+              {
+                "name": "+1 Lap",
+                "rate": 0,
+                "value": 5.3
+              },
+              {
+                "name": "+2 Laps",
+                "rate": 0,
+                "value": 8.9
+              },
+              {
+                "name": "+3 Laps",
+                "rate": 0,
+                "value": 1.2
+              },
+              {
+                "name": "+4 Laps",
+                "rate": 0,
+                "value": 6.1
+              },
+              {
+                "name": "+5 Laps",
+                "rate": 0,
+                "value": 3.7
+              },
+              {
+                "name": "+6 Laps",
+                "rate": 0,
+                "value": 0.8
+              },
+              {
+                "name": "+7 Laps",
+                "rate": 0,
+                "value": 9.4
+              },
+              {
+                "name": "+8 Laps",
+                "rate": 0,
+                "value": 1.5
+              },
+              {
+                "name": "+9 Laps",
+                "rate": 0,
+                "value": 4.6
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -36,9 +36,8 @@ csv_data.then(() => {
 
     var filteredData;
 
-    function updateHistrogram(suck) {
+    function updateHistrogram(bins) {
         // Listen to the slider?
-        var bins = suck;
         var range = 100;
         var incr = range / bins;
 
@@ -60,8 +59,6 @@ csv_data.then(() => {
                 }
             }
             if (d.Overtakes > range) {
-                console.log(d.Overtakes);
-                console.log(d.range);
                 raceCounts[`${range}++`]++;
             }
         });
@@ -126,9 +123,7 @@ csv_data.then(() => {
                 tooltip.transition().duration(200).style("opacity", 0.9);
 
                 tooltip
-                    .html("Range: " + d.category + "<br>Count: " + d.count)
-                    .style("left", x + "px")
-                    .style("top", y + height * 0.2 + "px"); // Adjust the offset value as needed
+                    .html("Range: " + d.category + "<br>Count: " + d.count);
 
                 // Add a horizontal line on the bar
                 svg.append("line")
@@ -152,7 +147,7 @@ csv_data.then(() => {
 
         svg.selectAll("g").remove();
 
-        svg.append("g")
+        var suck = svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .transition()
 
@@ -170,18 +165,12 @@ csv_data.then(() => {
     function changeRaceList() {
         // Filter data based on desired IDs
         filteredData = overtakes.filter(function (d) {
-            return current_raceIds.includes(d.ID);
+            return current_raceIds.includes(d.raceId);
         });
         updateHistrogram(12);
     }
     changeRaceList();
     updateHistrogram(12);
-    // Listen to the slider?
-    // d3.select("#mySlider").on("change", function (d) {
-    //     updateHistrogram(this.value);
-    // });
-    // });
-
     slider.onChange(() => {
         changeRaceList();
     });

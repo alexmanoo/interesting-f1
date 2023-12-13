@@ -57,10 +57,10 @@ let csv_data = Promise.all([
         d.raceId = +d.raceId;
     });
 
-    // pitstops.forEach(function (d) {
-    //     d.raceId = +d.raceId;
-    //     d.stop = +d.stop;
-    // });
+    pitstops.forEach(function (d) {
+        d.raceId = +d.raceId;
+        d.stop = +d.stop;
+    });
 
     races_dict = createRacesDict();
     current_raceIds = getFilteredRaceIds(min_rating, max_rating);

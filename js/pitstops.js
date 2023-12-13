@@ -21,8 +21,6 @@ csv_data.then(() => {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // Specify the desired IDs to include in the plot
-    var desiredIDs = ["3", "4", "5"];
 
     // Title for the bar chart
     svg.append("text")
@@ -35,9 +33,8 @@ csv_data.then(() => {
         .text("Pit stop Count for Selected IDs");
 
     // d3.csv("data/pit_stops_total.csv").then(function (data) {
-        var filteredData = pitstops.filter(function (d) {
-            return desiredIDs.includes(d.ID);
-        });
+        var filteredData;
+        changeRaceList();
 
         function updateHistrogram(suck) {
             // Listen to the slider?
@@ -130,21 +127,19 @@ csv_data.then(() => {
                     tooltip.transition().duration(200).style("opacity", 0.9);
 
                     tooltip
-                        .html("Range: " + d.category + "<br>Count: " + d.count)
-                        .style("left", x + "px")
-                        .style("top", y + height * 1.5 + "px"); // Adjust the offset value as needed
+                        .html("Range: " + d.category + "<br>Count: " + d.count);
 
                     // Add a horizontal line on the bar
                     svg.append("line")
-                        .transition()
-                        .duration(300)
-                        .style("opacity", 0.9)
-                        .attr("class", "hover-line")
-                        .attr("x1", 0)
-                        .attr("x2", width)
-                        .attr("y1", height - (d.count / maxY) * height) // Corrected line
-                        .attr("y2", height - (d.count / maxY) * height) // Corrected line
-                        .attr("stroke", "red") // You can adjust the color as needed
+                    .duration(300)
+                    .style("opacity", 0.9)
+                    .attr("class", "hover-line")
+                    .attr("x1", 0)
+                    .attr("x2", width)
+                    .attr("y1", height - (d.count / maxY) * height) // Corrected line
+                    .attr("y2", height - (d.count / maxY) * height) // Corrected line
+                    .attr("stroke", "red") // You can adjust the color as needed
+                    .transition()
                         .attr("stroke-width", 2);
                 })
                 .on("mouseout", function () {
@@ -172,11 +167,14 @@ csv_data.then(() => {
         function changeRaceList() {
             // Filter data based on desired IDs
             filteredData = pitstops.filter(function (d) {
-                return d.raceId;
+                return current_raceIds.includes(d.raceId);
             });
+            updateHistrogram(12);
         }
         changeRaceList();
         updateHistrogram(12);
         
-    // });
+    slider.onChange(() => {
+        changeRaceList();
+    });
 });
