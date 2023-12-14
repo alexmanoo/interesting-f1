@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <div id="container"></div>
 
-<script src="d3.v7.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=#CHARSET" />
 
+<<<<<<< Updated upstream
 <style>
     #chart {
         max-width: 100%;
@@ -94,10 +94,20 @@
         font-size: 15px;
     }
 </style>
+=======
+>>>>>>> Stashed changes
 
 <p id="chart"></p>
 
 <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+  d3v3 = d3
+  window.d3 = null
+</script>
+<script src="d3.v7.js"></script>
+
+
 
 <script type="text/javascript">
     // Largeur de la width
@@ -107,21 +117,21 @@
     var margin = { top: 40, right: 0, bottom: 20, left: 0 },
         width = divWidth/2 - 25,
         height = 540 - margin.top - margin.bottom,
-        formatNumber = d3.format(",%"),
+        formatNumber = d3v3.format(",%"),
         colorDomain = [-0.1, 0, 0.1],
         colorRange = ["#dda8db", "#ebf2f7", "#9cbdd9"],
         transitioning;
 
     // sets x and y scale to determine size of visible boxes
-    var x = d3.scale.linear().domain([0, width]).range([0, width]);
+    var x = d3v3.scale.linear().domain([0, width]).range([0, width]);
 
-    var y = d3.scale.linear().domain([0, height]).range([0, height]);
+    var y = d3v3.scale.linear().domain([0, height]).range([0, height]);
 
     // adding a color scale
-    var color = d3.scale.linear().domain(colorDomain).range(colorRange);
+    var color = d3v3.scale.linear().domain(colorDomain).range(colorRange);
 
     // introduce color scale here
-    var treemap = d3.layout
+    var treemap = d3v3.layout
         .treemap()
         .children(function (d, depth) {
             return depth ? null : d._children;
@@ -132,7 +142,7 @@
         .ratio((height / width) * 0.5 * (1 + Math.sqrt(5)))
         .round(false);
 
-    var svg = d3
+    var svg = d3v3
         .select("#chart")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -157,7 +167,7 @@
         .attr("y", 6 - margin.top)
         .attr("dy", ".75em");
 
-    var legend = d3
+    var legend = d3v3
         .select("#legend")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -201,7 +211,7 @@
     // coordinates. This lets us use a viewport to zoom.
     function layout(d) {
         if (d._children) {
-            // treemap nodes comes from the treemap set of functions as part of d3
+            // treemap nodes comes from the treemap set of functions as part of d3v3
             treemap.nodes({ _children: d._children });
             d._children.forEach(function (c) {
                 c.x = d.x + c.x * d.dx;
@@ -253,7 +263,7 @@
 
 
     var myColors = ["#4169b0","#0080c4","#0092d6","#009ee3"]
-    d3.csv("data/finish_status_with_ids.csv", function (error, data) {
+    d3v3.csv("data/finish_status_with_ids.csv", function (error, data) {
         if (error) throw error;
         var root = {
             name: "total_finishes",
@@ -538,7 +548,7 @@
                         d.name +
                         "</p>" +
                         " <p> Count: " +
-                        d3.round(d.value, 2)
+                        d3v3.round(d.value, 2)
                     );
                 })
                 .attr("class", "textdiv"); //textdiv class allows us to style the text easily with CSS

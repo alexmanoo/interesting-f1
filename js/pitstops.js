@@ -36,7 +36,7 @@ csv_data.then(() => {
         var filteredData;
         changeRaceList();
 
-        function updateHistrogram(suck) {
+        function updateHistogram(suck) {
             // Listen to the slider?
             var bins = suck;
             var range = 180;
@@ -169,10 +169,10 @@ csv_data.then(() => {
             filteredData = pitstops.filter(function (d) {
                 return current_raceIds.includes(d.raceId);
             });
-            updateHistrogram(12);
+            updateHistogram(12);
         }
         changeRaceList();
-        updateHistrogram(12);
+        updateHistogram(12);
         
     slider.onChange(() => {
         changeRaceList();
