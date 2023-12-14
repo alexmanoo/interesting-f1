@@ -129,18 +129,18 @@ csv_data.then(() => {
                     tooltip
                         .html("Range: " + d.category + "<br>Count: " + d.count);
 
-                    // Add a horizontal line on the bar
-                    svg.append("line")
+                // Add a horizontal line on the bar
+                svg.append("line")
+                    .attr("class", "hover-line")
+                    .transition()
                     .duration(300)
                     .style("opacity", 0.9)
-                    .attr("class", "hover-line")
                     .attr("x1", 0)
                     .attr("x2", width)
                     .attr("y1", height - (d.count / maxY) * height) // Corrected line
                     .attr("y2", height - (d.count / maxY) * height) // Corrected line
                     .attr("stroke", "red") // You can adjust the color as needed
-                    .transition()
-                        .attr("stroke-width", 2);
+                    .attr("stroke-width", 2);
                 })
                 .on("mouseout", function () {
                     // Hide tooltip and remove the horizontal line on mouseout
