@@ -11,7 +11,10 @@
     <script src="js/field-spread-2.js"></script>
     <script src="js/overtakes.js"></script>
     <script src="js/pitstops.js"></script>
-    <script src="js/tire_types.js"></script>
+    <script src="js/tire-types.js"></script>
+    <script src="js/winner-champ-pos.js"></script>
+    <script src="js/races-when.js"></script>
+
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css" />
@@ -20,6 +23,7 @@
 <body>
     <div id="slider-container"></div>
     <div id="range-label"></div>
+    
     <div id="safety_stackedbarchart"></div>
     <button id="btn-p1-p2">P1 - P2</button>
     <button id="btn-p2-p3">P2 - P3</button>
@@ -31,12 +35,10 @@
     <div id="pitstops">
         <div id="tooltip" style="position: absolute; opacity: 0"></div>
     </div>
-    <div id="tire_types">
-        <button onclick="rerun()">Rerun animation</button>
-        <svg
-            id="chart"
-            preserveAspectRatio="xMinYMin meet"
-            viewBox="0 0 200 200"
-        ></svg>
+
+    <div class="flex-container">
+      <div id="tire-types"></div>
+      <div id="winner-champ-pos"></div>
+      <div id="races-when"></div>
     </div>
 </body>
