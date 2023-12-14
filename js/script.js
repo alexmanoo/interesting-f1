@@ -22,6 +22,8 @@ let csv_data = Promise.all([
     d3.csv("../data/overtakes_with_ids.csv"),
     d3.csv("../data/pit_stops_total.csv"),
     d3.csv("../clean_data/tire_types.csv"),
+    d3.csv("../clean_data/results_with_champ_pos.csv"),
+    d3.csv("../clean_data/races_when.csv"),
 ]).then(function (data) {
     races = data[0];
     race_ratings = data[1];
@@ -31,7 +33,8 @@ let csv_data = Promise.all([
     overtakes = data[5];
     pitstops = data[6];
     tire_types = data[7];
-
+    results_with_champ_pos = data[8];
+    races_when = data[9];
 
     // Take only first 5000 data points
     // time_diffs = time_diffs.slice(10000, 10700);
