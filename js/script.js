@@ -122,6 +122,25 @@ function getFilteredRaceIds(min_rating, max_rating) {
 
 function updateCurrentRacesCount() {
     // Update the div with id=n-selected-races with current_raceIds.length
+
+
+
     document.getElementById("current-races-count").textContent =
-        "Number of races in your selection: " + current_raceIds.length;
+        "Number of races in your selection: " + current_raceIds.length + ". Races are between years: " +  getMinMaxYear();
+}
+
+function getMinMaxYear() {
+  let min_year = 3000;
+  let max_year = 0;
+
+  current_raceIds.forEach(function (d) {
+    let yr = races_dict[d].year;
+    if (yr < min_year) {
+      min_year = yr;
+    }
+    if (yr > max_year) {
+      max_year = yr;
+    }
+  })
+  return min_year + " - " + max_year;
 }
