@@ -21,25 +21,60 @@
 <body>
     <div id="slider-container"></div>
     <div id="range-label"></div>
-    <div id="current-races-count">Number of races in your selection: . Races are between: </div>
-    <div id="track_location"></div>
-    <div id="safety_stackedbarchart"></div>
-    <button id="btn-p1-p2">P1 - P2</button>
-    <button id="btn-p2-p3">P2 - P3</button>
-    <button id="btn-p1-last">P1 - Last</button>
-    <div id="time_diffs"></div>
-    <div id="overtakes">
-        <div id="tooltip" style="position: absolute; opacity: 0"></div>
+    <div id="current-races-count">
+        Number of races in your selection: . Races are between:
     </div>
-    <div id="pitstops">
-        <div id="tooltip" style="position: absolute; opacity: 0"></div>
-    </div>
-    <div id="tire_types">
-        <button onclick="rerun()">Rerun animation</button>
-        <svg
-            id="chart"
-            preserveAspectRatio="xMinYMin meet"
-            viewBox="0 0 200 200"
-        ></svg>
+
+    <style>
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+      }
+
+      .grid-item {
+        border: 1px solid black;
+        padding: 10px;
+      }
+    </style>
+
+    <div class="grid-container">
+      <div class="grid-item" style="background-color: red">
+        <div id="track_location"></div>
+      </div>
+      <div class="grid-item" style="background-color: black">
+        <div id="safety_stackedbarchart"></div>
+      </div>
+      <div class="grid-item" style="background-color: blue">
+        <button id="btn-p1-p2">P1 - P2</button>
+        <button id="btn-p2-p3">P2 - P3</button>
+        <button id="btn-p1-last">P1 - Last</button>
+        <div id="time_diffs"></div>
+      </div>
+      <div class="grid-item" style="background-color: yellow">
+        <div id="overtakes">
+          <div id="tooltip"></div>
+        </div>
+      </div>
+      <div class="grid-item" style="background-color: purple">
+        <div id="pitstops">
+          <div id="tooltip"></div>
+        </div>
+      </div>
+      <div class="grid-item" style="background-color: green">
+        <div id="tire_types">
+          <button onclick="rerun()">Rerun animation</button>
+          <svg id="chart" preserveAspectRatio="xMinYMin meet" viewBox="0 0 200 200"></svg>
+        </div>
+      </div>
+      <div class="grid-item" style="background-color: green">
+
+      </div>
+      <div class="grid-item" style="background-color: green">
+
+      </div>
+      <div class="grid-item" style="background-color: green">
+        
+      </div>
     </div>
 </body>
