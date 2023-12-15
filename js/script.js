@@ -32,7 +32,6 @@ let csv_data = Promise.all([
     pitstops = data[6];
     tire_types = data[7];
 
-
     // Take only first 5000 data points
     // time_diffs = time_diffs.slice(10000, 10700);
     // Provide types for each column for all data
@@ -64,6 +63,7 @@ let csv_data = Promise.all([
 
     races_dict = createRacesDict();
     current_raceIds = getFilteredRaceIds(min_rating, max_rating);
+    updateCurrentRacesCount();
     initSlider();
 });
 
@@ -80,6 +80,7 @@ function onChangeSlider(newRange) {
     min_rating = newRange.begin;
     max_rating = newRange.end;
     current_raceIds = getFilteredRaceIds(min_rating, max_rating);
+    updateCurrentRacesCount();
 }
 
 function createRacesDict() {
@@ -101,9 +102,12 @@ function getFilteredRaceIds(min_rating, max_rating) {
     let res = [];
 
     for (const [raceId, race_details] of Object.entries(races_dict)) {
-      if (race_details.rating >= min_rating && race_details.rating <= max_rating) {
-        res.push(+raceId);
-      }
+        if (
+            race_details.rating >= min_rating &&
+            race_details.rating <= max_rating
+        ) {
+            res.push(+raceId);
+        }
     }
 
     // races_dict.forEach(function (d) {
@@ -114,4 +118,10 @@ function getFilteredRaceIds(min_rating, max_rating) {
     // });
 
     return res;
+}
+
+function updateCurrentRacesCount() {
+    // Update the div with id=n-selected-races with current_raceIds.length
+    document.getElementById("current-races-count").textContent =
+        "Number of races in your selection: " + current_raceIds.length;
 }
