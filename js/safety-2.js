@@ -110,7 +110,7 @@ function updateSafetyChart(data, svg, color, xScale, yScale, tooltip, adjustedHe
     .attr("width", xScale.bandwidth())
     // .attr("y", (d) => yScale(d[1]))
     // .attr("height", (d) => yScale(d[0]) - yScale(d[1]))
-    .attr("y", (d) => adjustedHeight)
+    .attr("y", adjustedHeight)
     .attr("height", 0)
     .on("mouseover", (event, d) => mouseoverHandlerSafety(event, d, tooltip))
     .on("mousemove", (event, d) => mousemoveHandlerSafety(event, d, tooltip))
