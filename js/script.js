@@ -14,15 +14,17 @@ let pitstops;
 let tire_types;
 
 let csv_data = Promise.all([
-    d3.csv("../data/races.csv"),
-    d3.csv("../data/race_ratings_with_race_ids.csv"),
-    d3.csv("../data/safety_cars_with_race_ids.csv"),
-    d3.csv("../data/red_flags_with_race_ids.csv"),
-    d3.csv("../data/time_diffs.csv"),
-    d3.csv("../data/overtakes_with_ids.csv"),
-    d3.csv("../data/pit_stops_total.csv"),
-    d3.csv("../clean_data/tire_types.csv"),
-    d3.csv("../data/finish_status_with_ids.csv"),
+    d3.csv("../data/races.csv"), // 1
+    d3.csv("../data/race_ratings_with_race_ids.csv"), // 2
+    d3.csv("../data/safety_cars_with_race_ids.csv"), // 3
+    d3.csv("../data/red_flags_with_race_ids.csv"), // 4
+    d3.csv("../data/time_diffs.csv"), // 5
+    d3.csv("../data/overtakes_with_ids.csv"), // 6
+    d3.csv("../data/pit_stops_total.csv"), // 7
+    d3.csv("../clean_data/tire_types.csv"), // 8
+    d3.csv("../data/finish_status_with_ids.csv"),// 9
+    d3.csv("../clean_data/results_with_champ_pos.csv"), // 10
+    d3.csv("../clean_data/races_when.csv"), // 11
 ]).then(function (data) {
     races = data[0];
     race_ratings = data[1];
@@ -33,6 +35,8 @@ let csv_data = Promise.all([
     pitstops = data[6];
     tire_types = data[7];
     finish_stats = data[8];
+    results_with_champ_pos = data[9];
+    races_when = data[10];
 
     // Take only first 5000 data points
     // time_diffs = time_diffs.slice(10000, 10700);
