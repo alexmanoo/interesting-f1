@@ -47,6 +47,8 @@ csv_data.then(() => {
             .append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
+            .style("display", "block")
+            .style("margin", "0 auto")
             .append("g")
             .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
@@ -68,10 +70,15 @@ csv_data.then(() => {
             .append("rect")
             .attr("class", "bar")
             .attr("x", function(d) { return xScale(d.driver); })
-            .attr("y", function(d) { return yScale(d.count); })
+            // .attr("y", function(d) { return yScale(d.count); })
             .attr("width", xScale.bandwidth())
-            .attr("height", function(d) { return height - yScale(d.count); });
-
+            .attr("height", 0)
+            .transition()
+            .duration(800)
+            .attr("y", function(d) { return yScale(d.count); })
+            .attr("height", function(d) { return height - yScale(d.count); })
+            .delay(function(d,i){console.log(i) ; return(i*100)});
+        
         // Add the X Axis
         svg.append("g")
             .attr("transform", "translate(0, " + height + ")")

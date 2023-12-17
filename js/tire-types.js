@@ -72,6 +72,38 @@ csv_data.then(() => {
         arcs.exit()
             .remove();
 
+        // Add legend for the pie chart
+        d3.select("#pie-legend").select("svg").remove();
+
+        var svg = d3.select("#pie-legend")
+            .append("svg")
+            .attr("width", document.getElementById("pie-legend").clientWidth)
+            .attr("height", height)
+            .append("g")
+            .attr("transform",
+                "translate(" + -20 + "," + 50 + ")");
+        
+        svg.selectAll("mydots")
+            .data(data)
+            .enter()
+            .append("circle")
+                .attr("cx", 100)
+                .attr("cy", function(d,i){ return 100 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
+                .attr("r", 7)
+                .style("fill", function(d,i){ return colors[i]})
+        
+        // Add one dot in the legend for each name.
+        svg.selectAll("mylabels")
+            .data(data)
+            .enter()
+            .append("text")
+                .attr("x", 120)
+                .attr("y", function(d,i){ return 100 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
+                // .style("fill", function(d,i){ return colors[i]})
+                .text(function(d,i){ return tire_types.columns[i+2]})
+                .attr("text-anchor", "left")
+                .style("alignment-baseline", "middle")
+
     }
 
 });

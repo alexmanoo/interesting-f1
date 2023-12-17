@@ -30,6 +30,8 @@ csv_data.then(() => {
                     .append("svg")
                     .attr("width", width + margin.left + margin.right)
                     .attr("height", height + margin.top + margin.bottom)
+                    .style("display", "block")
+                    .style("margin", "0 auto")
                     .append("g")
                     .attr("transform",
                         "translate(" + margin.left + "," + margin.top + ")");
@@ -63,35 +65,32 @@ csv_data.then(() => {
             .attr("stroke-width", 1.5)
             .attr("d", line(lineData));
 
-        // add dots
+        // highlight the dot or dots with the highest count
+        var max = d3.max(Object.values(dict));
+        var colors = [];
+        for (var i = 0; i < lineData.length; i++) {
+            if (lineData[i].count == max) {
+                colors.push("#ff0000");
+            }
+            else {
+                colors.push("#69b3a2");
+            }
+        }
+        
+        // add dots with a transition in y coordinate
         svg.append("g")
             .selectAll("dot")
             .data(lineData)
             .enter()
             .append("circle")
             .attr("cx", function(d) { return x(d.round) } )
+            .attr("cy", function(d) { return y(0) } )
+            .attr("r", 5)
+            .attr("fill", function(d,i){ return colors[i]})
+            .transition()
+            .duration(400)
             .attr("cy", function(d) { return y(d.count) } )
-            .attr("r", 5)
-            .attr("fill", "#69b3a2")
-
-        // highlight the dot or dots with the highest count
-        var max = d3.max(Object.values(dict));
-        var max_rounds = [];
-        for (var i = 0; i < lineData.length; i++) {
-            if (lineData[i].count == max) {
-                max_rounds.push(lineData[i].round);
-            }
-        }
-
-        svg.append("g")
-            .selectAll("dot")
-            .data(max_rounds)
-            .enter()
-            .append("circle")
-            .attr("cx", function(d) { return x(d) } )
-            .attr("cy", function(d) { return y(dict[d]) } )
-            .attr("r", 5)
-            .attr("fill", "#ff0000")
+            .delay(function(d,i){console.log(i) ; return(i*30)});
         
         // add x-axis label
         svg.append("text")
@@ -107,6 +106,5 @@ csv_data.then(() => {
             .attr("y", -margin.left + 30)
             .attr("transform", "rotate(-90)")
             .text("Amount of times raced");
-
     }
 });

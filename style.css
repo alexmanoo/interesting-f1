@@ -78,3 +78,15 @@
         display: flex;
         flex-wrap: nowrap;
       }
+
+#pie-chart {
+    display: flex;
+    margin: 0 auto;
+}
+
+#pie-legend {
+    max-width: 40%;
+}
+#tire-types {
+    flex: 1;
+}
