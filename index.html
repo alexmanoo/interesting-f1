@@ -32,150 +32,148 @@
     <div id="slider-container"></div>
     <div id="range-label"></div>
     <div id="current-races-count">
-      Number of races in your selection: . Races are between:
+        Number of races in your selection: . Races are between:
     </div>
 
     <style>
-      .grid-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 10px;
-      }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 10px;
+        }
 
-      .grid-item {
-        border: 1px solid black;
-        padding: 10px;
-      }
+        .grid-item {
+            border: 1px solid black;
+            padding: 10px;
+        }
     </style>
 
-
-
-      <div style="background-color: red">
+    <div style="background-color: red">
         <div id="track_location"></div>
-      </div>
+    </div>
 
-      <div class="grid-container">
-      <div class="grid-item" style="background-color: black">
-        <div id="safety_stackedbarchart"></div>
-      </div>
-      <div class="grid-item" style="background-color: blue">
-        <button id="btn-p1-p2">P1 - P2</button>
-        <button id="btn-p2-p3">P2 - P3</button>
-        <button id="btn-p1-last">P1 - Last</button>
-        <div id="time_diffs"></div>
-      </div>
-      <div class="grid-item" style="background-color: yellow">
-        <div id="overtakes">
-          <div id="tooltip"></div>
+    <div class="grid-container">
+        <div class="grid-item" style="background-color: white">
+            <div id="safety_stackedbarchart"></div>
         </div>
-      </div>
-      <div class="grid-item" style="background-color: purple">
-        <div id="pitstops">
-          <div id="tooltip"></div>
+        <div class="grid-item" style="background-color: blue">
+            <button id="btn-p1-p2">P1 - P2</button>
+            <button id="btn-p2-p3">P2 - P3</button>
+            <button id="btn-p1-last">P1 - Last</button>
+            <div id="time_diffs"></div>
         </div>
-      </div>
-      <div class="grid-item" style="background-color: green">
-        <div id="tire-types"></div>
-      </div>
-      <div class="grid-item" style="background-color: green">
-       <div id="winner-champ-pos"></div>
-      </div>
-      <div class="grid-item" style="background-color: green">
-      <div id="races-when"></div>
-      </div>
-      <div class="grid-item" style="background-color: green">
-        <div id="dnf">
-          <style>
-              #chart {
-                  max-width: 100%;
-                  overflow: auto;
-              }
-  
-              text {
-                  pointer-events: none;
-              }
-  
-              .grandparent text {
-                  font-weight: bold;
-                  font-family: "sans-serif";
-                  font-size: 20px;
-              }
-  
-              rect {
-                  stroke: #fff;
-                  stroke-width: 1px;
-              }
-  
-              rect.parent,
-              .grandparent rect {
-                  stroke-width: 2px;
-              }
-  
-              .grandparent:hover rect {
-                  fill: darkgrey;
-              }
-  
-              .children rect.parent,
-              .grandparent rect {
-                  cursor: pointer;
-              }
-  
-              .children rect.child {
-                  opacity: 0;
-              }
-  
-              .children:hover rect.child {
-                  opacity: 1;
-                  stroke-width: 1px;
-              }
-  
-              .children:hover rect.parent {
-                  opacity: 0;
-              }
-  
-              .legend {
-                  margin-bottom: 8px !important;
-              }
-  
-              .legend rect {
-                  stroke-width: 0px;
-              }
-  
-              .legend text {
-                  text-anchor: middle;
-                  pointer-events: auto;
-                  font-size: 15px;
-                  font-family: "sans-serif";
-                  fill: black;
-              }
-  
-              .form-group {
-                  text-align: left;
-              }
-  
-              .textdiv {
-                  font-family: "sans-serif";
-                  font-size: 14px;
-                  padding: 6px;
-                  cursor: pointer;
-                  overflow: none;
-              }
-  
-              .textdiv .title {
-                  font-size: 102%;
-                  font-weight: bold;
-                  margin-top: 4px;
-                  font-size: 16px;
-              }
-  
-              .textdiv p {
-                  line-height: 13px;
-                  margin: 0 0 4px;
-                  padding: 0px;
-                  font-size: 15px;
-              }
-          </style>
-      </div>
-      </div>
-    
+        <div class="grid-item" style="background-color: yellow">
+            <div id="overtakes">
+                <div id="tooltip"></div>
+            </div>
+        </div>
+        <div class="grid-item" style="background-color: purple">
+            <div id="pitstops">
+                <div id="tooltip"></div>
+            </div>
+        </div>
+        <div class="grid-item" style="background-color: green">
+            <div id="tire-types"></div>
+        </div>
+        <div class="grid-item" style="background-color: green">
+            <div id="winner-champ-pos"></div>
+        </div>
+        <div class="grid-item" style="background-color: green">
+            <div id="races-when"></div>
+        </div>
+        <div class="grid-item" style="background-color: green">
+            <div id="dnf">
+                <style>
+                    #chart {
+                        max-width: 100%;
+                        overflow: auto;
+                    }
+
+                    text {
+                        pointer-events: none;
+                    }
+
+                    .grandparent text {
+                        font-weight: bold;
+                        font-family: "sans-serif";
+                        font-size: 20px;
+                    }
+
+                    rect {
+                        stroke: #fff;
+                        stroke-width: 1px;
+                    }
+
+                    rect.parent,
+                    .grandparent rect {
+                        stroke-width: 2px;
+                    }
+
+                    .grandparent:hover rect {
+                        fill: darkgrey;
+                    }
+
+                    .children rect.parent,
+                    .grandparent rect {
+                        cursor: pointer;
+                    }
+
+                    .children rect.child {
+                        opacity: 0;
+                    }
+
+                    .children:hover rect.child {
+                        opacity: 1;
+                        stroke-width: 1px;
+                    }
+
+                    .children:hover rect.parent {
+                        opacity: 0;
+                    }
+
+                    .legend {
+                        margin-bottom: 8px !important;
+                    }
+
+                    .legend rect {
+                        stroke-width: 0px;
+                    }
+
+                    .legend text {
+                        text-anchor: middle;
+                        pointer-events: auto;
+                        font-size: 15px;
+                        font-family: "sans-serif";
+                        fill: black;
+                    }
+
+                    .form-group {
+                        text-align: left;
+                    }
+
+                    .textdiv {
+                        font-family: "sans-serif";
+                        font-size: 14px;
+                        padding: 6px;
+                        cursor: pointer;
+                        overflow: none;
+                    }
+
+                    .textdiv .title {
+                        font-size: 102%;
+                        font-weight: bold;
+                        margin-top: 4px;
+                        font-size: 16px;
+                    }
+
+                    .textdiv p {
+                        line-height: 13px;
+                        margin: 0 0 4px;
+                        padding: 0px;
+                        font-size: 15px;
+                    }
+                </style>
+            </div>
+        </div>
+    </div>
 </body>
