@@ -5,7 +5,7 @@ csv_data.then(() => {
   // Setup graph dimensions and margins
   const graphDimensions = {
     margin: { top: 10, right: 30, bottom: 20, left: 50 },
-    width: 1700,
+    width: 700,
     height: 400,
   };
   const { width, height, margin } = graphDimensions;
