@@ -5,7 +5,7 @@ csv_data.then(() => {
   // Setup graph dimensions and margins
   const graphDimensions = {
     margin: { top: 10, right: 30, bottom: 20, left: 50 },
-    width: 1700,
+    width: 700,
     height: 400,
   };
   const { width, height, margin } = graphDimensions;
@@ -35,12 +35,12 @@ csv_data.then(() => {
   const tooltip = initializeSafetyTooltip("#safety_stackedbarchart");
 
   // Create and update the graph
-  updateSafetyChart(safetyData, svg, colorPalette, xScale, yScale, tooltip);
+  updateSafetyChart(safetyData, svg, colorPalette, xScale, yScale, tooltip, adjustedHeight);
 
   // Slider event handling
   slider.onChange((newRange) => {
     safetyData = loadSafetyData(newRange.begin, newRange.end);
-    updateSafetyChart(safetyData, svg, colorPalette, xScale, yScale, tooltip);
+    updateSafetyChart(safetyData, svg, colorPalette, xScale, yScale, tooltip, adjustedHeight);
   });
 });
 
@@ -81,7 +81,7 @@ function initializeSafetyTooltip(selector) {
     .style("width", "120px");
 }
 
-function updateSafetyChart(data, svg, color, xScale, yScale, tooltip) {
+function updateSafetyChart(data, svg, color, xScale, yScale, tooltip, adjustedHeight) {
   // Update the X and Y axes
   const raceNames = Array.from(new Set(data.map((d) => d.race_name)));
   xScale.domain(raceNames);
@@ -108,11 +108,19 @@ function updateSafetyChart(data, svg, color, xScale, yScale, tooltip) {
     .join("rect")
     .attr("x", (d) => xScale(d.data.race_name))
     .attr("width", xScale.bandwidth())
-    .attr("y", (d) => yScale(d[1]))
-    .attr("height", (d) => yScale(d[0]) - yScale(d[1]))
+    // .attr("y", (d) => yScale(d[1]))
+    // .attr("height", (d) => yScale(d[0]) - yScale(d[1]))
+    .attr("y", adjustedHeight)
+    .attr("height", 0)
     .on("mouseover", (event, d) => mouseoverHandlerSafety(event, d, tooltip))
     .on("mousemove", (event, d) => mousemoveHandlerSafety(event, d, tooltip))
-    .on("mouseleave", () => mouseleaveHandlerSafety(tooltip));
+    .on("mouseleave", () => mouseleaveHandlerSafety(tooltip))
+    .transition()
+    .duration(800) // Set the duration of the transition
+    .attr("y", (d) => yScale(d[1]))
+    .attr("height", (d) => yScale(d[0]) - yScale(d[1]))
+    .delay((d, i) => i * 100); // Optional: stagger the animations
+  
 }
 
 // Mouse event handlers for the tooltip
