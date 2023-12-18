@@ -5,8 +5,8 @@ let races_dict;
 let safety_cars;
 let red_flags;
 let time_diffs;
-let min_rating = 0;
-let max_rating = 10;
+let min_rating = 0.0;
+let max_rating = 10.0;
 let slider;
 let current_raceIds;
 let overtakes;
@@ -22,7 +22,7 @@ let csv_data = Promise.all([
     d3.csv("../data/overtakes_with_ids.csv"), // 6
     d3.csv("../data/pit_stops_total.csv"), // 7
     d3.csv("../clean_data/tire_types.csv"), // 8
-    d3.csv("../data/finish_status_with_ids.csv"),// 9
+    d3.csv("../data/finish_status_with_ids.csv"), // 9
     d3.csv("../clean_data/results_with_champ_pos.csv"), // 10
     d3.csv("../clean_data/races_when.csv"), // 11
 ]).then(function (data) {
@@ -38,10 +38,6 @@ let csv_data = Promise.all([
     results_with_champ_pos = data[9];
     races_when = data[10];
 
-    // Take only first 5000 data points
-    // time_diffs = time_diffs.slice(10000, 10700);
-    // Provide types for each column for all data
-    console.log(time_diffs[0]);
     time_diffs.forEach(function (d) {
         d.raceId = +d.raceId;
         d.lap = +d.lap;
@@ -49,22 +45,18 @@ let csv_data = Promise.all([
         d.p2_p3 = +d.p2_p3;
         d.p1_last = +d.p1_last;
     });
-    console.log(time_diffs[0]);
     safety_cars.forEach(function (d) {
         d.raceId = +d.raceId;
         d.count = +d.count;
     });
-
     overtakes.forEach(function (d) {
         d.Overtakes = +d.Overtakes;
         d.raceId = +d.raceId;
     });
-
     pitstops.forEach(function (d) {
         d.raceId = +d.raceId;
         d.stop = +d.stop;
     });
-
     finish_stats.forEach(function (d) {
         d.raceId = +d.raceId;
         d.Finished = +d.Finished;
@@ -97,9 +89,8 @@ let csv_data = Promise.all([
         d.Laps7 = +d.Laps7;
         d.Laps8 = +d.Laps8;
         d.Laps9 = +d.Laps9;
-        // Continue updating other properties similarly
-        // root.children[1].children[3].children[9].value += +d.SomeOtherProperty;
     });
+
     races_dict = createRacesDict();
     current_raceIds = getFilteredRaceIds(min_rating, max_rating);
     updateCurrentRacesCount();
@@ -111,6 +102,7 @@ function initSlider() {
     d3.select("#range-label").text(
         slider.range().begin + " - " + slider.range().end
     );
+    slider.range([4, 10]);
     slider.onChange(onChangeSlider);
 }
 
@@ -149,37 +141,29 @@ function getFilteredRaceIds(min_rating, max_rating) {
         }
     }
 
-    // races_dict.forEach(function (d) {
-    //     if (d.rating >= min_rating && d.rating <= max_rating) {
-    //       console.log(d["raceId"].raceId)
-    //         res.push(d["raceId"].raceId);
-    //     }
-    // });
-
     return res;
 }
 
 function updateCurrentRacesCount() {
-    // Update the div with id=n-selected-races with current_raceIds.length
-
-
-
     document.getElementById("current-races-count").textContent =
-        "Number of races in your selection: " + current_raceIds.length + ". Races are between years: " +  getMinMaxYear();
+        "Number of races in your selection: " +
+        current_raceIds.length +
+        ". Races are between years: " +
+        getMinMaxYear();
 }
 
 function getMinMaxYear() {
-  let min_year = 3000;
-  let max_year = 0;
+    let min_year = 3000;
+    let max_year = 0;
 
-  current_raceIds.forEach(function (d) {
-    let yr = races_dict[d].year;
-    if (yr < min_year) {
-      min_year = yr;
-    }
-    if (yr > max_year) {
-      max_year = yr;
-    }
-  })
-  return min_year + " - " + max_year;
+    current_raceIds.forEach(function (d) {
+        let yr = races_dict[d].year;
+        if (yr < min_year) {
+            min_year = yr;
+        }
+        if (yr > max_year) {
+            max_year = yr;
+        }
+    });
+    return min_year + " - " + max_year;
 }
