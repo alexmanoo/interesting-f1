@@ -6,12 +6,12 @@
     position: relative;
     height: 30px;
     background-color: #eeeef5;
-  }
+}
 
 .slider {
     position: absolute;
-    border: 1px solid #AAB;
-    background: #BCE;
+    border: 1px solid #aab;
+    background: #bce;
     height: 100%;
     width: 58px;
     top: 0px;
@@ -23,8 +23,8 @@
     position: absolute;
     height: 9px;
     width: 9px;
-    border: 1px solid #AAB;
-    background: #9AC;
+    border: 1px solid #aab;
+    background: #9ac;
 
     /* Support for bootstrap */
     box-sizing: border-box;
@@ -42,20 +42,22 @@
     left: -4px;
 }
 
-.slider .EE, .slider .WW {
+.slider .EE,
+.slider .WW {
     top: 50%;
     margin-top: -4px;
 }
 
-.play-container .button{
-    fill-opacity: 0.0;
-    stroke: #AAB;
+.play-container .button {
+    fill-opacity: 0;
+    stroke: #aab;
     stroke-width: 1.6;
 }
 
-.play-container .play, .play-container .stop {
-    fill: #BCE;
-    stroke: #AAB;
+.play-container .play,
+.play-container .stop {
+    fill: #bce;
+    stroke: #aab;
     stroke-width: 1;
 }
 
@@ -68,13 +70,97 @@
     margin: 20px auto 0;
     height: 400px;
     width: 400px;
-    }
+}
 
 .bar {
     fill: steelblue;
-    }
+}
 
 .flex-container {
-        display: flex;
-        flex-wrap: nowrap;
-      }
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+text {
+    pointer-events: none;
+}
+
+.grandparent text {
+    font-weight: bold;
+    font-family: "sans-serif";
+    font-size: 20px;
+}
+
+rect {
+    stroke: #fff;
+    stroke-width: 1px;
+}
+
+rect.parent,
+.grandparent rect {
+    stroke-width: 2px;
+}
+
+.grandparent:hover rect {
+    fill: darkgrey;
+}
+
+.children rect.parent,
+.grandparent rect {
+    cursor: pointer;
+}
+
+.children rect.child {
+    opacity: 0;
+}
+
+.children:hover rect.child {
+    opacity: 1;
+    stroke-width: 1px;
+}
+
+.children:hover rect.parent {
+    opacity: 0;
+}
+
+.legend {
+    margin-bottom: 8px !important;
+}
+
+.legend rect {
+    stroke-width: 0px;
+}
+
+.legend text {
+    text-anchor: middle;
+    pointer-events: auto;
+    font-size: 15px;
+    font-family: "sans-serif";
+    fill: black;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.textdiv {
+    font-family: "sans-serif";
+    font-size: 14px;
+    padding: 6px;
+    cursor: pointer;
+    overflow: none;
+}
+
+.textdiv .title {
+    font-size: 102%;
+    font-weight: bold;
+    margin-top: 4px;
+    font-size: 16px;
+}
+
+.textdiv p {
+    line-height: 13px;
+    margin: 0 0 4px;
+    padding: 0px;
+    font-size: 15px;
+}
