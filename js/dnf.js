@@ -122,14 +122,47 @@ csv_data.then(() => {
                 {
                     name: "Finished",
                     rate: 1,
-                    value: 0,
+                    children: [
+                        {
+                            name: "Not lapped",
+                            rate: 2,
+                            value: 0
+                        },
+                        {
+                            name: "Lapped",
+                            rate: 2,
+                            children: [
+                                {
+                                    name: "1 Lap",
+                                    rate: 3,
+                                    value: 0,
+                                },
+                                {
+                                    name: "2 Laps",
+                                    rate: 3,
+                                    value: 0,
+                                },
+                                {
+                                    name: "3 Laps",
+                                    rate: 3,
+                                    value: 0,
+                                },
+                                {
+                                    name: "4 Laps and over",
+                                    rate: 3,
+                                    value: 0,
+                                },
+                            ],
+                        },
+                    ],
                 },
                 {
                     name: "Did-Not-Finish",
                     rate: 1,
                     children: [
+                        { name: "DQ", rate: 1, value: 0 },
                         {
-                            name: "Accidents and Disqualifications",
+                            name: "Accidents",
                             rate: 2,
                             children: [
                                 {
@@ -155,6 +188,7 @@ csv_data.then(() => {
                             ],
                         },
                         {
+
                             name: "Technical Issues",
                             rate: 2,
                             children: [
@@ -225,68 +259,49 @@ csv_data.then(() => {
                                 },
                             ],
                         },
-                        {
-                            name: "Laps Completed",
-                            rate: 2,
-                            children: [
-                                {
-                                    name: "1 Lap",
-                                    rate: 3,
-                                    value: 0,
-                                },
-                                {
-                                    name: "2 Laps",
-                                    rate: 3,
-                                    value: 0,
-                                },
-                                {
-                                    name: "3 Laps",
-                                    rate: 3,
-                                    value: 0,
-                                },
-                                {
-                                    name: "4 Laps and over",
-                                    rate: 3,
-                                    value: 0,
-                                },
-                            ],
-                        },
                     ],
                 },
             ],
         };
 
         filteredData.forEach(function (d) {
-            root.children[0].value += d.Finished;
-            root.children[1].children[0].children[0].value += d.Accident;
-            root.children[1].children[0].children[1].value += d.Collision;
-            root.children[1].children[0].children[2].value += d.Spunoff;
-            root.children[1].children[0].children[3].value += d.Spunoff;
-            root.children[1].children[1].children[0].value += d.Disqualified;
-            root.children[1].children[1].children[1].value += d.Gearbox;
-            root.children[1].children[1].children[2].value += d.Transmission;
-            root.children[1].children[1].children[3].value += d.Clutch;
-            root.children[1].children[1].children[4].value += d.Hydraulics;
-            root.children[1].children[1].children[5].value += d.Electrical;
-            root.children[1].children[1].children[6].value += d.Suspension;
-            root.children[1].children[1].children[7].value += d.Brakes;
-            root.children[1].children[1].children[8].value += d.Overheating;
-            root.children[1].children[1].children[9].value += d.Mechanical;
-            root.children[1].children[1].children[10].value += d.Tyre;
-            root.children[1].children[1].children[11].value += d.Puncture;
-            root.children[1].children[1].children[12].value += d.Differential; //
-            root.children[1].children[1].children[12].value += d.Radiator; //
-            root.children[1].children[1].children[12].value += d.DriverSeat; //
-            root.children[1].children[1].children[12].value += d.Driveshaft; //
-            root.children[1].children[2].children[0].value += d.Lap1;
-            root.children[1].children[2].children[1].value += d.Laps2;
-            root.children[1].children[2].children[2].value += d.Laps3;
-            root.children[1].children[2].children[3].value += d.Laps4;
-            root.children[1].children[2].children[3].value += d.Laps5;
-            root.children[1].children[2].children[3].value += d.Laps6;
-            root.children[1].children[2].children[3].value += d.Laps7;
-            root.children[1].children[2].children[3].value += d.Laps8;
-            root.children[1].children[2].children[3].value += d.Laps9;
+            root.children[0].children[0].value += d.Finished;
+
+            root.children[0].children[1].children[0].value += d.Lap1;
+            root.children[0].children[1].children[1].value += d.Laps2;
+            root.children[0].children[1].children[2].value += d.Laps3;
+            root.children[0].children[1].children[3].value += d.Laps4;
+            root.children[0].children[1].children[3].value += d.Laps5;
+            root.children[0].children[1].children[3].value += d.Laps6;
+            root.children[0].children[1].children[3].value += d.Laps7;
+            root.children[0].children[1].children[3].value += d.Laps8;
+            root.children[0].children[1].children[3].value += d.Laps9;
+            
+            root.children[1].children[0].value += d.Disqualified;
+
+            root.children[1].children[1].children[0].value += d.Accident;
+            root.children[1].children[1].children[1].value += d.Collision;
+            root.children[1].children[1].children[2].value += d.Spunoff;
+            root.children[1].children[1].children[3].value += d.Spunoff;
+
+            
+
+            root.children[1].children[2].children[0].value += d.Engine;
+            root.children[1].children[2].children[1].value += d.Gearbox;
+            root.children[1].children[2].children[2].value += d.Transmission;
+            root.children[1].children[2].children[3].value += d.Clutch;
+            root.children[1].children[2].children[4].value += d.Hydraulics;
+            root.children[1].children[2].children[5].value += d.Electrical;
+            root.children[1].children[2].children[6].value += d.Suspension;
+            root.children[1].children[2].children[7].value += d.Brakes;
+            root.children[1].children[2].children[8].value += d.Overheating;
+            root.children[1].children[2].children[9].value += d.Mechanical;
+            root.children[1].children[2].children[10].value += d.Tyre;
+            root.children[1].children[2].children[11].value += d.Puncture;
+            root.children[1].children[2].children[12].value += d.Differential; //
+            root.children[1].children[2].children[12].value += d.Radiator; //
+            root.children[1].children[2].children[12].value += d.DriverSeat; //
+            root.children[1].children[2].children[12].value += d.Driveshaft; //
             // Continue updating other properties similarly
             // root.children[1].children[3].children[9].value += +d.SomeOtherProperty;
         });
