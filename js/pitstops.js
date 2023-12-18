@@ -10,7 +10,7 @@ csv_data.then(() => {
     var gridItemWidth = gridItem.clientWidth;
     var gridItemHeight = gridItem.clientHeight;
     var margin = {
-            top: gridItemHeight * 0.111,
+            top: gridItemHeight * 0.1,
             right: gridItemWidth * 0.05,
             bottom: gridItemHeight * 0.1,
             left: gridItemWidth * 0.075,
@@ -45,12 +45,12 @@ csv_data.then(() => {
     // Title for the bar chart
     svg.append("text")
         .attr("x", width / 2 - 10)
-        .attr("y", height * 1.075)
+        .attr("y", height * 1.1)
         .attr("text-anchor", "middle")
         .style("font-size", 15 * (gridItemWidth / 500) + "px")
         .style("font-family", "Helvetica")
         .style("font-weight", "bold") // Add bold style
-        .text("Pit stop Count for Selected IDs");
+        .text("Races vs. Number of Pit Stops");
 
     // d3.csv("data/pit_stops_total.csv").then(function (data) {
     var filteredData;
@@ -81,7 +81,7 @@ csv_data.then(() => {
             }
             if (d.stop > range) {
                 console.log(d.stop);
-                raceCounts[`${range}++`]++;
+                raceCounts[`${range}+`]++;
             }
         });
 
@@ -150,7 +150,7 @@ csv_data.then(() => {
                 .on("mouseover", function (event, d) {
                     var [x, y] = d3.pointer(event);
                     tooltip.transition().duration(200).style("opacity", 1);
-                    tooltip.html("Range: " + d.category + "<br>Count: " + d.count);
+                    tooltip.html("Numbers of Pit Stops: " + d.category + "<br>Number of Races: " + d.count);
                     svg.append("line")
                         .attr("class", "hover-line")
                         .transition()
@@ -169,6 +169,25 @@ csv_data.then(() => {
                 });
         });
     
+        // Add x-axis labels
+        svg.selectAll(".x-axis-label")
+            .data(barData)
+            .enter()
+            .append("text")
+            .attr("class", "x-axis-label")
+            .attr("x", function (d) {
+                return x(d.category) + x.bandwidth() / 2;
+            })
+            .attr("y", height * 1.035) // Adjust the y position based on your preference
+            .attr("text-anchor", "middle")
+            .text(function (d) {
+                return d.category;
+            })
+            .style("font-size", 26 * (gridItemWidth / 1500) + "px") // Adjust the font size as needed
+            .style("font-family", "Helvetica")
+            .style("transform", "rotate(0)"); // Rotate the labels for better visibility
+
+        // ... (remaining code)
         svg.selectAll("g").remove();
 
         svg.append("g")
