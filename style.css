@@ -1,10 +1,15 @@
-body {
+body, #main-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #B2BEB5;
     width: 1920px;
+}
+
+#warning {
+    color: red;
+    display: none;
 }
 
 

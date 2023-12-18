@@ -39,43 +39,45 @@
         </div>
     </div>
 
-    <div>
-        <div id="track_location"></div>
-    </div>
+    <div id="warning">There are no races in your selection! Please select a bigger ratings interval!</div>
 
-    <div class="grid-container">
-        <div class="row-container">
-            <div>
-                <div id="safety_stackedbarchart"></div>
-            </div>
-            <div>
-                <!-- add some space -->
-                <span
-                    >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
-                >
-                <button id="btn-p1-p2">P1 - P2</button>
-                <button id="btn-p2-p3">P2 - P3</button>
-                <button id="btn-p1-last">P1 - Last</button>
-                <div id="time_diffs"></div>
-            </div>
+    <div id="main-container">
+        <div style="text-align: center;">
+            <div id="track_location"></div>
         </div>
-        <div class="row-container">
-            <div id="overtakes">
-                <div id="tooltip"></div>
+        <div class="grid-container">
+            <div class="row-container">
+                <div>
+                    <div id="safety_stackedbarchart"></div>
+                </div>
+                <div>
+                    <span
+                        >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
+                    >
+                    <button id="btn-p1-p2">P1 - P2</button>
+                    <button id="btn-p2-p3">P2 - P3</button>
+                    <button id="btn-p1-last">P1 - Last</button>
+                    <div id="time_diffs"></div>
+                </div>
             </div>
-            <div id="pitstops">
-                <div id="tooltip"></div>
+            <div class="row-container">
+                <div id="overtakes">
+                    <div id="tooltip"></div>
+                </div>
+                <div id="pitstops">
+                    <div id="tooltip"></div>
+                </div>
             </div>
-        </div>
-        <div class="row-container">
-            <div id="tire-types"></div>
-            <div id="winner-champ-pos"></div>
-        </div>
-        <div class="row-container">
-            <div id="races-when"></div>
+            <div class="row-container">
+                <div id="tire-types"></div>
+                <div id="winner-champ-pos"></div>
+            </div>
+            <div class="row-container">
+                <div id="races-when"></div>
 
-            <div style="width: 50%">
-                <div id="dnf"></div>
+                <div style="width: 50%">
+                    <div id="dnf"></div>
+                </div>
             </div>
         </div>
     </div>

@@ -112,6 +112,7 @@ function onChangeSlider(newRange) {
     max_rating = newRange.end;
     current_raceIds = getFilteredRaceIds(min_rating, max_rating);
     updateCurrentRacesCount();
+    showWarning();
 }
 
 function createRacesDict() {
@@ -149,8 +150,18 @@ function updateCurrentRacesCount() {
         "Number of races in your selection: " +
         current_raceIds.length +
         ". Races are between years: " +
-        getMinMaxYear();
+        getMinMaxYear();   
 }
+
+function showWarning() {
+    if (current_raceIds.length == 0) {
+        document.getElementById("warning").style.display = "block";
+        document.getElementById("main-container").style.display = "none";
+    } else {
+        document.getElementById("warning").style.display = "none";
+        document.getElementById("main-container").style.display = "block";
+    }
+  }
 
 function getMinMaxYear() {
     let min_year = 3000;
