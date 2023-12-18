@@ -7,7 +7,7 @@ csv_data.then(() => {
         .style("opacity", 0);
 
     var margin = { top: 50, right: 50, bottom: 50, left: 40 },
-        width = 750 - margin.left - margin.right,
+        width = 700 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
     var x = d3.scaleBand().range([0, width]).padding(0.3);

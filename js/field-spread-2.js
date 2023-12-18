@@ -5,8 +5,8 @@ csv_data.then(() => {
     d3.select("#time_diffs").select("svg").remove();
 
     // Specify the chart’s dimensions.
-    const width = 1400;
-    const height = 1000;
+    const width = 600;
+    const height = 500;
     const marginTop = 20;
     const marginRight = 20;
     const marginBottom = 30;
@@ -33,10 +33,10 @@ csv_data.then(() => {
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", [0, 0, width, height])
-      .attr(
-        "style",
-        "max-width: 100%; height: auto; overflow: visible; font: 10px sans-serif;"
-      );
+      // .attr(
+      //   "style",
+      //   "max-width: 100%; height: auto; overflow: visible; font: 10px sans-serif;"
+      // );
 
     // Add the axes
     svg

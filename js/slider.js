@@ -173,7 +173,7 @@ function createD3RangeSlider(
 
     //Fire change listeners
     changeListeners.forEach(function (callback) {
-      callback({ begin: sliderRange.begin.toFixed(2), end: sliderRange.end.toFixed(2) });
+      callback({ begin: sliderRange.begin.toFixed(1), end: sliderRange.end.toFixed(1) });
     });
   }
 
