@@ -1,8 +1,8 @@
 csv_data.then(() => {
     // set the dimensions and margins of the graph
     var margin = {top: 10, right: 30, bottom: 30, left: 60},
-    width = 490 - margin.left - margin.right,
-    height = 440 - margin.top - margin.bottom;
+    width = 700 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
 
     let translate = {x: width / 2 + (margin.right+margin.left)/2, y: height / 2 + (margin.top+margin.bottom)/2};
     let radius = Math.min(width, height) / 2;

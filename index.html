@@ -30,48 +30,53 @@
 
 <body>
     <div id="sticky-header">
-        <div id="slider-container"></div>
+        <div style="width: 80%">
+            <div id="slider-container"></div>
+        </div>
         <div id="range-label"></div>
         <div id="current-races-count">
             Number of races in your selection: . Races are between:
         </div>
     </div>
 
-    <div style="background-color: red">
+    <div>
         <div id="track_location"></div>
     </div>
 
     <div class="grid-container">
-        <div class="grid-item" style="background-color: white">
-            <div id="safety_stackedbarchart"></div>
+        <div class="row-container">
+            <div>
+                <div id="safety_stackedbarchart"></div>
+            </div>
+            <div>
+                <!-- add some space -->
+                <span
+                    >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
+                >
+                <button id="btn-p1-p2">P1 - P2</button>
+                <button id="btn-p2-p3">P2 - P3</button>
+                <button id="btn-p1-last">P1 - Last</button>
+                <div id="time_diffs"></div>
+            </div>
         </div>
-        <div class="grid-item" style="background-color: blue">
-            <button id="btn-p1-p2">P1 - P2</button>
-            <button id="btn-p2-p3">P2 - P3</button>
-            <button id="btn-p1-last">P1 - Last</button>
-            <div id="time_diffs"></div>
-        </div>
-        <div class="grid-item" style="background-color: yellow">
+        <div class="row-container">
             <div id="overtakes">
                 <div id="tooltip"></div>
             </div>
-        </div>
-        <div class="grid-item" style="background-color: purple">
             <div id="pitstops">
                 <div id="tooltip"></div>
             </div>
         </div>
-        <div class="grid-item" style="background-color: green">
+        <div class="row-container">
             <div id="tire-types"></div>
-        </div>
-        <div class="grid-item" style="background-color: green">
             <div id="winner-champ-pos"></div>
         </div>
-        <div class="grid-item" style="background-color: green">
+        <div class="row-container">
             <div id="races-when"></div>
-        </div>
-        <div class="grid-item" style="background-color: green">
-            <div id="dnf"></div>
+
+            <div style="width: 50%">
+                <div id="dnf"></div>
+            </div>
         </div>
     </div>
 </body>

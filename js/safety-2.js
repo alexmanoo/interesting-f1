@@ -6,7 +6,7 @@ csv_data.then(() => {
   const graphDimensions = {
     margin: { top: 10, right: 30, bottom: 20, left: 50 },
     width: 700,
-    height: 400,
+    height: 500,
   };
   const { width, height, margin } = graphDimensions;
   const adjustedWidth = width - margin.left - margin.right;
