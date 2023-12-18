@@ -64,7 +64,7 @@ csv_data.then(() => {
         });
 
         // Now, raceCounts will contain counts for each range of 5 from 0 to 50
-        console.log(raceCounts);
+        // console.log(raceCounts);
 
         // Create an array of objects for the bar chart
         var barData = Object.keys(raceCounts).map(function (key) {

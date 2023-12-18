@@ -90,7 +90,7 @@ csv_data.then(() => {
             .transition()
             .duration(400)
             .attr("cy", function(d) { return y(d.count) } )
-            .delay(function(d,i){console.log(i) ; return(i*30)});
+            .delay(function(d,i){return(i*30)});
         
         // add x-axis label
         svg.append("text")

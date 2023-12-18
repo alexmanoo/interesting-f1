@@ -328,7 +328,6 @@ csv_data.then(() => {
             // root.children[1].children[3].children[9].value += +d.SomeOtherProperty;
         });
 
-        console.log(root);
         initialize(root);
         accumulate(root);
         layout(root);

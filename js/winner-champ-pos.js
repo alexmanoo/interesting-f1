@@ -77,7 +77,7 @@ csv_data.then(() => {
             .duration(800)
             .attr("y", function(d) { return yScale(d.count); })
             .attr("height", function(d) { return height - yScale(d.count); })
-            .delay(function(d,i){console.log(i) ; return(i*100)});
+            .delay(function(d,i){return(i*100)});
         
         // Add the X Axis
         svg.append("g")

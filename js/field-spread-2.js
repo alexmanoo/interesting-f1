@@ -10,7 +10,7 @@ csv_data.then(() => {
     const marginTop = 20;
     const marginRight = 20;
     const marginBottom = 30;
-    const marginLeft = 30;
+    const marginLeft = 50;
 
     // Create the positional scales.
     const x = d3
@@ -23,8 +23,6 @@ csv_data.then(() => {
       .domain(d3.extent(time_diffs, (d) => d[selectedColumn]))
       .nice()
       .range([height - marginBottom, marginTop]);
-
-    console.log(d3.extent(time_diffs, (d) => d[selectedColumn]))
 
     // Create the SVG container.
     const svg = d3
