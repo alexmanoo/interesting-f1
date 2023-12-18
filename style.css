@@ -1,9 +1,10 @@
-body, #main-container {
+body,
+#main-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #B2BEB5;
+    background-color: #b2beb5;
     width: 1920px;
 }
 
@@ -11,7 +12,6 @@ body, #main-container {
     color: red;
     display: none;
 }
-
 
 .slider-container {
     background-color: #f2f2f9;
@@ -95,9 +95,9 @@ body, #main-container {
 }
 
 .flex-container {
-        display: flex;
-        flex-wrap: nowrap;
-      }
+    display: flex;
+    flex-wrap: nowrap;
+}
 
 #pie-chart {
     display: flex;
@@ -112,12 +112,19 @@ body, #main-container {
 }
 
 #sticky-header {
+    width: 100%;
+    background-color: #b2beb5;
+    display: flex;
+    justify-content: center;
     position: -webkit-sticky; /* Safari */
     position: sticky;
     top: 0;
     margin-bottom: 5px;
+}
+
+#header-container {
     width: 1000px;
-    background-color: #B2BEB5;
+    background-color: #b2beb5;
 
     display: flex;
     flex-flow: column;

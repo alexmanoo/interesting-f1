@@ -4,7 +4,11 @@ csv_data.then(() => {
         .append("div")
         .attr("id", "tooltip")
         .style("position", "absolute")
-        .style("opacity", 0);
+        .style("opacity", 0)
+        .style("background-color", "#ffffff") // Set the background color
+        .style("border", "1px solid #000000") // Set the border
+        .style("border-radius", "10px")
+        .style("padding", "10px"); // Set padding for content
 
     var margin = { top: 50, right: 50, bottom: 50, left: 40 },
         width = 700 - margin.left - margin.right,
@@ -12,6 +16,7 @@ csv_data.then(() => {
 
     var x = d3.scaleBand().range([0, width]).padding(0.3);
     var y = d3.scaleLinear().range([height, 0]);
+    tooltip.style("font-size", 15 * (width / 1100) + "px"); // Set the desired font size for the text
 
     var svg = d3
         .select("#overtakes")
@@ -29,49 +34,40 @@ csv_data.then(() => {
         .attr("x", width / 2 - 10)
         .attr("y", height * 1.1)
         .attr("text-anchor", "middle")
-        .style("font-size", "18px")
+        .style("font-size", 15 * (width / 500) + "px")
         .style("font-family", "Helvetica")
         .style("font-weight", "bold") // Add bold style
-        .text("Overtakes Count for Selected IDs");
+        .text("Races vs. Number of Overtakes");
 
     var filteredData;
-
     function updateHistrogram(bins) {
-        // Listen to the slider?
-        var range = 100;
+        var range = 80;
         var incr = range / bins;
 
-        // Initialize race counts with increments of 5
         var raceCounts = {};
         for (var i = 0; i < range - 1; i += incr) {
             raceCounts[`${Math.round(i)}-${Math.round(i + incr - 1)}`] = 0;
         }
-        raceCounts[`${range}++`] = 0;
+        raceCounts[`${range}+`] = 0;
 
         filteredData.forEach(function (d) {
-            // Find the appropriate range for Overtakes
             for (var i = 0; i < range; i += incr) {
                 if (d.Overtakes >= i && d.Overtakes <= i + incr) {
                     raceCounts[
                         `${Math.round(i)}-${Math.round(i + incr - 1)}`
                     ]++;
-                    break; // Break out of the loop once the range is found
+                    break;
                 }
             }
             if (d.Overtakes > range) {
-                raceCounts[`${range}++`]++;
+                raceCounts[`${range}+`]++;
             }
         });
 
-        // Now, raceCounts will contain counts for each range of 5 from 0 to 50
-        // console.log(raceCounts);
-
-        // Create an array of objects for the bar chart
         var barData = Object.keys(raceCounts).map(function (key) {
             return { category: key, count: raceCounts[key] };
         });
 
-        // Define a custom color for the bars
         var barColor = d3
             .scaleOrdinal()
             .domain(
@@ -92,74 +88,95 @@ csv_data.then(() => {
                 return d.count;
             }),
         ]);
-        svg.selectAll(".bar").remove();
+        // ... (previous code)
+
+        // Select existing bars and apply transitions
+        var bars = svg.selectAll(".bar").data(barData);
+
+        bars.exit().remove(); // Remove bars that are not needed
+
         var maxY = d3.max(barData, function (d) {
             return d.count;
         });
-        var bars = svg
-            .selectAll(".bar")
-            .data(barData)
-            .enter()
+
+        bars.enter()
             .append("rect")
             .attr("class", "bar")
             .attr("width", x.bandwidth())
-            .attr("y", function (d) {
-                return y(d.count);
-            })
-            .attr("height", function (d) {
-                return height - y(d.count);
-            })
+            .attr("y", height)
+            .attr("height", 0)
             .attr("x", function (d) {
                 return x(d.category);
             })
             .attr("fill", function (d) {
                 return barColor(d.category);
             })
-            .on("mouseover", function (event, d) {
-                // Get mouse position relative to the SVG container
-                var [x, y] = d3.pointer(event);
-
-                // Show tooltip on mouseover
-                tooltip.transition().duration(200).style("opacity", 0.9);
-
-                tooltip
-                    .html("Range: " + d.category + "<br>Count: " + d.count);
-
-                // Add a horizontal line on the bar
-                svg.append("line")
-                    .attr("class", "hover-line")
-                    .transition()
-                    .duration(300)
-                    .style("opacity", 0.9)
-                    .attr("x1", 0)
-                    .attr("x2", width)
-                    .attr("y1", height - (d.count / maxY) * height) // Corrected line
-                    .attr("y2", height - (d.count / maxY) * height) // Corrected line
-                    .attr("stroke", "red") // You can adjust the color as needed
-                    .attr("stroke-width", 2);
+            .merge(bars)
+            .transition()
+            .duration(500)
+            .attr("y", function (d) {
+                return y(d.count);
             })
-            .on("mouseout", function () {
-                // Hide tooltip and remove the horizontal line on mouseout
-                tooltip.transition().duration(500).style("opacity", 0);
-
-                svg.selectAll(".hover-line").remove();
+            .attr("height", function (d) {
+                return height - y(d.count);
+            })
+            .on("end", function () {
+                // Re-add mouseover and tooltip functionality after the transition
+                d3.select(this)
+                    .on("mouseover", function (event, d) {
+                        var [x, y] = d3.pointer(event);
+                        tooltip.transition().duration(200).style("opacity", 1);
+                        tooltip.html(
+                            "Numbers of Overtakes: " + d.category + "<br>Number of races: " + d.count
+                        );
+                        svg.append("line")
+                            .attr("class", "hover-line")
+                            .transition()
+                            .duration(300)
+                            .style("opacity", 0.9)
+                            .attr("x1", 0)
+                            .attr("x2", width)
+                            .attr("y1", height - (d.count / maxY) * height)
+                            .attr("y2", height - (d.count / maxY) * height)
+                            .attr("stroke", "red")
+                            .attr("stroke-width", 2);
+                    })
+                    .on("mouseout", function () {
+                        tooltip.transition().duration(500).style("opacity", 0);
+                        svg.selectAll(".hover-line").remove();
+                    });
             });
+
+        // Add x-axis labels
+        svg.selectAll(".x-axis-label")
+            .data(barData)
+            .enter()
+            .append("text")
+            .attr("class", "x-axis-label")
+            .attr("x", function (d) {
+                return x(d.category) + x.bandwidth() / 2;
+            })
+            .attr("y", height * 1.035) // Adjust the y position based on your preference
+            .attr("text-anchor", "middle")
+            .text(function (d) {
+                return d.category;
+            })
+            .style("font-size", 26 * (width / 1500) + "px") // Adjust the font size as needed
+            .style("font-family", "Helvetica")
+            .style("transform", "rotate(0)"); // Rotate the labels for better visibility
+
+        // ... (remaining code)
 
         svg.selectAll("g").remove();
 
-        var suck = svg.append("g")
+        svg.append("g")
             .attr("transform", "translate(0," + height + ")")
-            .transition()
-
-            .call(d3.axisBottom(x).tickSize(0).tickFormat("")); // This will remove tick labels
+            .call(d3.axisBottom(x).tickSize(0).tickFormat(""));
 
         svg.append("g")
-
-            // .transition()
-            .call(d3.axisLeft(y));
-
-        // Adjust font size for x-axis tick labels
-        svg.selectAll(".tick text").style("font-size", "15px");
+            .call(d3.axisLeft(y))
+            .selectAll("text")
+            .style("font-size", 28 * (width / 1500) + "px");
     }
 
     function changeRaceList() {
