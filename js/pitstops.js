@@ -137,7 +137,7 @@ csv_data.then(() => {
         })
         .merge(bars)
         .transition()
-        .duration(800)
+        .duration(500)
         .attr("y", function (d) {
             return y(d.count);
         })

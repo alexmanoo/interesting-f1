@@ -54,7 +54,7 @@ csv_data.then(() => {
 
     var filteredData;
     function updateHistrogram(bins) {
-        var range = 100;
+        var range = 80;
         var incr = range / bins;
 
         var raceCounts = {};
@@ -126,7 +126,7 @@ csv_data.then(() => {
             })
             .merge(bars)
             .transition()
-            .duration(800)
+            .duration(500)
             .attr("y", function (d) {
                 return y(d.count);
             })
