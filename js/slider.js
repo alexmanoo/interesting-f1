@@ -357,7 +357,7 @@ var dragResizeW = d3
       }
 
       //Set the range
-      setRange(rLower, rUpper);
+      setRange(rLower.toFixed(1), rUpper.toFixed(1));
     } else if (typeof b === "number") {
       rLower = b;
       var dif = sliderRange.end - sliderRange.begin;

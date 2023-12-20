@@ -5,15 +5,19 @@ let races_dict;
 let safety_cars;
 let red_flags;
 let time_diffs;
-let min_rating = 0.0;
+let min_rating = 8.0;
 let max_rating = 10.0;
 let slider;
 let current_raceIds;
 let overtakes;
 let pitstops;
 let tire_types;
-let selected_years = [
+let all_years = [
     2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019,
+    2020, 2021, 2022, 2023,
+];
+let selected_years = [
+    // 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019,
     2020, 2021, 2022, 2023,
 ];
 let yearPicker;
@@ -108,16 +112,21 @@ let csv_data = Promise.all([
 });
 
 function initSlider() {
-    slider = createD3RangeSlider(0, 10, "#slider-container");
+    slider = createD3RangeSlider(0.0, 10.0, "#slider-container");
+
+    slider.range(min_rating, max_rating);
+
     d3.select("#range-label").text(
         slider.range().begin + " - " + slider.range().end
     );
-    slider.onTouchEnd(onChangeSlider);
+
+    slider.onChange(onChangeSlider);
 }
 
 function initYearPicker() {
     yearPicker = createYearPicker();
     yearPicker.onChange(updateChartData);
+    slider.onTouchEnd(yearPicker.reCreate);
 }
 
 function onChangeSlider(newRange) {
@@ -159,7 +168,6 @@ function getFilteredRaceIds(min_rating, max_rating, selected_years) {
         if (
             race_details.rating >= min_rating &&
             race_details.rating <= max_rating &&
-            // race_details.year is in selected_years
             selected_years.includes(parseInt(race_details.year))
         ) {
             res.push(+raceId);

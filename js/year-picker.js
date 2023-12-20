@@ -117,6 +117,7 @@ function createYearPicker(callbacks = []) {
         .on("mouseleave", mouseleave)
         .on("click", mouseclick);
 
+    runCallbacks();
 
     function onChange(callback) {
         changeListeners.push(callback);
@@ -127,14 +128,18 @@ function createYearPicker(callbacks = []) {
         changeListeners.forEach((callback) => callback());
     }
 
-    return { onChange: onChange, getCallbacks: () => changeListeners };
-}
+    function reCreate() {
+        let old_callbacks = callbacks;
+        yearPicker = initYearPicker(old_callbacks);
+        return yearPicker;
+    }
 
-function reCreateYearPicker() {
-    let callbacks = yearPicker.getCallbacks()
-    let yearPicker = initYearPicker(callbacks)
-    yearPicker.runCallbacks()
-    return yearPicker
+    return {
+        onChange: onChange,
+        getCallbacks: () => changeListeners,
+        runCallbacks: runCallbacks,
+        reCreate: reCreate,
+    };
 }
 
 function loadYearPickerData() {
@@ -146,8 +151,8 @@ function loadYearPickerData() {
     // Group by second element (year)
     years = d3.group(years, (d) => d[1]);
 
-    // Add missing years from selected_years
-    selected_years.forEach((year) => {
+    // Add missing years
+    all_years.forEach((year) => {
         year = year.toString();
         if (!years.has(year)) {
             years.set(year, []);
