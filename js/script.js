@@ -146,11 +146,11 @@ function getFilteredRaceIds(min_rating, max_rating) {
 }
 
 function updateCurrentRacesCount() {
-    document.getElementById("current-races-count").textContent =
-        "Number of races in your selection: " +
-        current_raceIds.length +
-        ". Races are between years: " +
-        getMinMaxYear();   
+    // document.getElementById("current-races-count").textContent =
+    //     "Number of races in your selection: " +
+    //     current_raceIds.length +
+    //     ". Races are between years: " +
+    //     getMinMaxYear();   
 }
 
 function showWarning() {
