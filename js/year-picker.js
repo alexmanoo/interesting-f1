@@ -1,9 +1,13 @@
-csv_data.then(() => {
+// csv_data.then(() => {
+function createYearPicker(callbacks = []) {
+    let changeListeners = callbacks;
     let data = loadYearPickerData();
 
-    var margin = { top: 80, right: 25, bottom: 30, left: 40 },
+    var margin = { top: 30, right: 25, bottom: 30, left: 40 },
         width = 600 - margin.left - margin.right,
-        height = 150 - margin.top - margin.bottom;
+        height = 100 - margin.top - margin.bottom;
+
+    d3.select("#year-picker").select("svg").remove();
 
     var svg = d3
         .select("#year-picker")
@@ -56,17 +60,30 @@ csv_data.then(() => {
     // Three function that change the tooltip when user hover / move / leave a cell
     const mouseover = function (event, d) {
         tooltip.style("opacity", 1);
-        d3.select(this).style("stroke", "black").style("opacity", 1);
     };
     const mousemove = function (event, d) {
         tooltip
-            .html("The exact value of<br>this cell is: " + d[1])
-            .style("left", (event.x + 15) + "px")
-            .style("top", (event.y + 15) + "px");
+            .html("Number of races: " + d[1])
+            .style("left", event.x + 15 + "px")
+            .style("top", event.y + 15 + "px");
     };
     const mouseleave = function (event, d) {
         tooltip.style("opacity", 0);
-        d3.select(this).style("stroke", "none").style("opacity", 0.8);
+    };
+
+    const mouseclick = function (event, d) {
+        // Toggle the year in selected_years
+        if (selected_years.includes(parseInt(d[0]))) {
+            d3.select(this).style("stroke", "none").style("opacity", 0.8);
+            selected_years = selected_years.filter(
+                (year) => year != parseInt(d[0])
+            );
+        } else {
+            d3.select(this).style("stroke", "black").style("opacity", 1);
+            selected_years.push(parseInt(d[0]));
+            selected_years.sort((a, b) => a - b);
+        }
+        runCallbacks();
     };
 
     // add the squares
@@ -89,12 +106,36 @@ csv_data.then(() => {
             return myColor(d[1]);
         })
         .style("stroke-width", 4)
-        .style("stroke", "none")
-        .style("opacity", 0.8)
+        .style("stroke", function (d) {
+            return selected_years.includes(parseInt(d[0])) ? "black" : "none";
+        })
+        .style("opacity", function (d) {
+            return selected_years.includes(parseInt(d[0])) ? 1 : 0.8;
+        })
         .on("mouseover", mouseover)
         .on("mousemove", mousemove)
-        .on("mouseleave", mouseleave);
-});
+        .on("mouseleave", mouseleave)
+        .on("click", mouseclick);
+
+
+    function onChange(callback) {
+        changeListeners.push(callback);
+        return this;
+    }
+
+    function runCallbacks() {
+        changeListeners.forEach((callback) => callback());
+    }
+
+    return { onChange: onChange, getCallbacks: () => changeListeners };
+}
+
+function reCreateYearPicker() {
+    let callbacks = yearPicker.getCallbacks()
+    let yearPicker = initYearPicker(callbacks)
+    yearPicker.runCallbacks()
+    return yearPicker
+}
 
 function loadYearPickerData() {
     // Get all years and counts from current_raceIds
@@ -105,10 +146,19 @@ function loadYearPickerData() {
     // Group by second element (year)
     years = d3.group(years, (d) => d[1]);
 
+    // Add missing years from selected_years
+    selected_years.forEach((year) => {
+        year = year.toString();
+        if (!years.has(year)) {
+            years.set(year, []);
+        }
+    });
+
     // Count the number of races for each year
     years = Array.from(years, ([key, value]) => [key, value.length]);
 
-    console.log(years);
+    // Sort by year
+    years.sort((a, b) => a[0] - b[0]);
 
     return years;
 }

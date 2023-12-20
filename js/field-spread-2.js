@@ -154,7 +154,8 @@ csv_data.then(() => {
 
   // Slider or any other mechanism to change min_rating and max_rating
   // On change of these values, call updateChart with the new filtered data
-  slider.onChange(() => onChangeSliderFS(selectedColumn));
+  slider.onTouchEnd(() => onChangeSliderFS(selectedColumn));
+  yearPicker.onChange(() => onChangeSliderFS(selectedColumn));
 
   // Event listeners for buttons
   d3.select("#btn-p1-p2").on("click", () => {

@@ -200,7 +200,6 @@ csv_data.then(() => {
     changeRaceList();
     updateHistogram(12);
 
-    slider.onChange(() => {
-        changeRaceList();
-    });
+    slider.onTouchEnd(changeRaceList);
+    yearPicker.onChange(changeRaceList);
 });

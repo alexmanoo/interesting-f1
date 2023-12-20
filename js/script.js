@@ -12,6 +12,11 @@ let current_raceIds;
 let overtakes;
 let pitstops;
 let tire_types;
+let selected_years = [
+    2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019,
+    2020, 2021, 2022, 2023,
+];
+let yearPicker;
 
 let csv_data = Promise.all([
     d3.csv("../data/races.csv"), // 1
@@ -92,9 +97,14 @@ let csv_data = Promise.all([
     });
 
     races_dict = createRacesDict();
-    current_raceIds = getFilteredRaceIds(min_rating, max_rating);
+    current_raceIds = getFilteredRaceIds(
+        min_rating,
+        max_rating,
+        selected_years
+    );
     updateCurrentRacesCount();
     initSlider();
+    initYearPicker();
 });
 
 function initSlider() {
@@ -102,15 +112,27 @@ function initSlider() {
     d3.select("#range-label").text(
         slider.range().begin + " - " + slider.range().end
     );
-    slider.range([4, 10]);
-    slider.onChange(onChangeSlider);
+    slider.onTouchEnd(onChangeSlider);
+}
+
+function initYearPicker() {
+    yearPicker = createYearPicker();
+    yearPicker.onChange(updateChartData);
 }
 
 function onChangeSlider(newRange) {
     d3.select("#range-label").text(newRange.begin + " - " + newRange.end);
     min_rating = newRange.begin;
     max_rating = newRange.end;
-    current_raceIds = getFilteredRaceIds(min_rating, max_rating);
+    updateChartData();
+}
+
+function updateChartData() {
+    current_raceIds = getFilteredRaceIds(
+        min_rating,
+        max_rating,
+        selected_years
+    );
     updateCurrentRacesCount();
     showWarning();
 }
@@ -130,13 +152,15 @@ function createRacesDict() {
     return r_dict;
 }
 
-function getFilteredRaceIds(min_rating, max_rating) {
+function getFilteredRaceIds(min_rating, max_rating, selected_years) {
     let res = [];
 
     for (const [raceId, race_details] of Object.entries(races_dict)) {
         if (
             race_details.rating >= min_rating &&
-            race_details.rating <= max_rating
+            race_details.rating <= max_rating &&
+            // race_details.year is in selected_years
+            selected_years.includes(parseInt(race_details.year))
         ) {
             res.push(+raceId);
         }
@@ -146,11 +170,11 @@ function getFilteredRaceIds(min_rating, max_rating) {
 }
 
 function updateCurrentRacesCount() {
-    // document.getElementById("current-races-count").textContent =
-    //     "Number of races in your selection: " +
-    //     current_raceIds.length +
-    //     ". Races are between years: " +
-    //     getMinMaxYear();   
+    document.getElementById("current-races-count").textContent =
+        "Number of races in your selection: " +
+        current_raceIds.length +
+        ". Races are between years: " +
+        getMinMaxYear();
 }
 
 function showWarning() {
@@ -161,7 +185,7 @@ function showWarning() {
         document.getElementById("warning").style.display = "none";
         document.getElementById("main-container").style.display = "block";
     }
-  }
+}
 
 function getMinMaxYear() {
     let min_year = 3000;

@@ -41,8 +41,7 @@ csv_data.then(() => {
         adjustedHeight
     );
 
-    // Slider event handling
-    slider.onChange(() => {
+    const changeTrackLocations = () => {
         trackLocations = loadTrackLocations();
         updateTLChart(
             trackLocations,
@@ -53,7 +52,11 @@ csv_data.then(() => {
             tooltip,
             adjustedHeight
         );
-    });
+    }
+
+    // Slider event handling
+    slider.onTouchEnd(changeTrackLocations);
+    yearPicker.onChange(changeTrackLocations);
 });
 
 // Functions for initializing SVG, Axes, Tooltip, and Graph Update

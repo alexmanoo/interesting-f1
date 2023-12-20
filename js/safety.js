@@ -151,7 +151,7 @@ csv_data.then(() => {
   function updateGraph(safetyData) {
   }
 
-  slider.onChange(function (newRange) {
+  slider.onTouchEnd(function (newRange) {
     onChangeSlider(newRange);
     safetyData = updateSafetyData();
     updateGraph(safetyData);

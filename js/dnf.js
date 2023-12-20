@@ -126,7 +126,7 @@ csv_data.then(() => {
                         {
                             name: "Not lapped",
                             rate: 2,
-                            value: 0
+                            value: 0,
                         },
                         {
                             name: "Lapped",
@@ -188,7 +188,6 @@ csv_data.then(() => {
                             ],
                         },
                         {
-
                             name: "Technical Issues",
                             rate: 2,
                             children: [
@@ -276,15 +275,13 @@ csv_data.then(() => {
             root.children[0].children[1].children[3].value += d.Laps7;
             root.children[0].children[1].children[3].value += d.Laps8;
             root.children[0].children[1].children[3].value += d.Laps9;
-            
+
             root.children[1].children[0].value += d.Disqualified;
 
             root.children[1].children[1].children[0].value += d.Accident;
             root.children[1].children[1].children[1].value += d.Collision;
             root.children[1].children[1].children[2].value += d.Spunoff;
             root.children[1].children[1].children[3].value += d.Spunoff;
-
-            
 
             root.children[1].children[2].children[0].value += d.Engine;
             root.children[1].children[2].children[1].value += d.Gearbox;
@@ -487,7 +484,6 @@ csv_data.then(() => {
     }
     changeRaceList();
 
-    slider.onChange(() => {
-        changeRaceList();
-    });
+    slider.onTouchEnd(changeRaceList);
+    yearPicker.onChange(changeRaceList);
 });

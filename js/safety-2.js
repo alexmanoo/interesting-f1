@@ -38,7 +38,7 @@ csv_data.then(() => {
   updateSafetyChart(safetyData, svg, colorPalette, xScale, yScale, tooltip, adjustedHeight);
 
   // Slider event handling
-  slider.onChange((newRange) => {
+  slider.onTouchEnd((newRange) => {
     safetyData = loadSafetyData(newRange.begin, newRange.end);
     updateSafetyChart(safetyData, svg, colorPalette, xScale, yScale, tooltip, adjustedHeight);
   });

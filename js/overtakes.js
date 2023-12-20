@@ -127,7 +127,10 @@ csv_data.then(() => {
                         var [x, y] = d3.pointer(event);
                         tooltip.transition().duration(200).style("opacity", 1);
                         tooltip.html(
-                            "Numbers of Overtakes: " + d.category + "<br>Number of races: " + d.count
+                            "Numbers of Overtakes: " +
+                                d.category +
+                                "<br>Number of races: " +
+                                d.count
                         );
                         svg.append("line")
                             .attr("class", "hover-line")
@@ -188,7 +191,6 @@ csv_data.then(() => {
     }
     changeRaceList();
     updateHistrogram(12);
-    slider.onChange(() => {
-        changeRaceList();
-    });
+    slider.onTouchEnd(changeRaceList);
+    yearPicker.onChange(changeRaceList);
 });

@@ -25,7 +25,7 @@ function createD3RangeSlider(
 
   var minWidth = 10;
 
-  var sliderRange = { begin: rangeMin, end: rangeMax };
+  var sliderRange = { begin: rangeMin.toFixed(1), end: rangeMax.toFixed(1) };
   var changeListeners = [];
   var touchEndListeners = [];
   var container = d3.select(containerSelector);
@@ -190,7 +190,7 @@ function createD3RangeSlider(
         startPlaying();
       }
       touchEndListeners.forEach(function (callback) {
-        callback({ begin: sliderRange.begin, end: sliderRange.end });
+        callback({ begin: sliderRange.begin.toFixed(1), end: sliderRange.end.toFixed(1) });
       });
     })
     .on("drag", function (event) {
@@ -218,7 +218,7 @@ var dragResizeW = d3
         startPlaying();
       }
       touchEndListeners.forEach(function (callback) {
-        callback({ begin: sliderRange.begin, end: sliderRange.end });
+        callback({ begin: sliderRange.begin.toFixed(1), end: sliderRange.end.toFixed(1) });
       });
     })
     .on("drag", function (event) {
@@ -254,7 +254,7 @@ var dragResizeW = d3
         startPlaying();
       }
       touchEndListeners.forEach(function (callback) {
-        callback({ begin: sliderRange.begin, end: sliderRange.end });
+        callback({ begin: sliderRange.begin.toFixed(1), end: sliderRange.end.toFixed(1) });
       });
     })
     .on("drag", function (event) {
