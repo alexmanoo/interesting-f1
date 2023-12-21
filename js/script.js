@@ -9,6 +9,7 @@ let min_rating = 8.0;
 let max_rating = 10.0;
 let slider;
 let current_raceIds;
+let current_raceIds_allYears;
 let overtakes;
 let pitstops;
 let tire_types;
@@ -106,6 +107,12 @@ let csv_data = Promise.all([
         max_rating,
         selected_years
     );
+    current_raceIds_allYears = getFilteredRaceIds(
+        min_rating,
+        max_rating,
+        all_years
+    );
+
     updateCurrentRacesCount();
     initSlider();
     initYearPicker();
@@ -126,7 +133,7 @@ function initSlider() {
 function initYearPicker() {
     yearPicker = createYearPicker();
     yearPicker.onChange(updateChartData);
-    slider.onTouchEnd(yearPicker.reCreate);
+    slider.onTouchEnd(createYearPicker);
 }
 
 function onChangeSlider(newRange) {
@@ -141,6 +148,11 @@ function updateChartData() {
         min_rating,
         max_rating,
         selected_years
+    );
+    current_raceIds_allYears = getFilteredRaceIds(
+        min_rating,
+        max_rating,
+        all_years
     );
     updateCurrentRacesCount();
     showWarning();

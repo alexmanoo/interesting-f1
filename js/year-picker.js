@@ -1,6 +1,6 @@
 // csv_data.then(() => {
-function createYearPicker(callbacks = []) {
-    let changeListeners = callbacks;
+let changeListeners = [];
+function createYearPicker() {
     let data = loadYearPickerData();
 
     var margin = { top: 30, right: 25, bottom: 30, left: 40 },
@@ -125,6 +125,7 @@ function createYearPicker(callbacks = []) {
     }
 
     function runCallbacks() {
+        console.log("callbacks count: ", changeListeners.length);
         changeListeners.forEach((callback) => callback());
     }
 
@@ -144,7 +145,7 @@ function createYearPicker(callbacks = []) {
 
 function loadYearPickerData() {
     // Get all years and counts from current_raceIds
-    let years = current_raceIds.map((raceId) => {
+    let years = current_raceIds_allYears.map((raceId) => {
         return [raceId, races_dict[raceId].year];
     });
 
@@ -152,12 +153,12 @@ function loadYearPickerData() {
     years = d3.group(years, (d) => d[1]);
 
     // Add missing years
-    all_years.forEach((year) => {
-        year = year.toString();
-        if (!years.has(year)) {
-            years.set(year, []);
-        }
-    });
+    // all_years.forEach((year) => {
+    //     year = year.toString();
+    //     if (!years.has(year)) {
+    //         years.set(year, []);
+    //     }
+    // });
 
     // Count the number of races for each year
     years = Array.from(years, ([key, value]) => [key, value.length]);
