@@ -62,33 +62,34 @@ csv_data.then(() => {
     changeRaceList();
 
     function updateHistogram(bins) {
-        // Listen to the slider?
-        var bins = bins;
-        var range = 180;
-        var incr = range / bins;
+// Listen to the slider?
+var bins = bins;
+var startValue = 20; // Set the start value for the histogram
+var range = 75;
+var incr = (range - startValue) / bins;
 
-        // Initialize race counts with increments of 5
-        var raceCounts = {};
-        for (var i = 0; i < range - 1; i += incr) {
-            raceCounts[`${Math.round(i)}-${Math.round(i + incr - 1)}`] = 0;
+// Initialize race counts with increments of 5
+var raceCounts = {};
+for (var i = startValue; i < range; i += incr) {
+    raceCounts[`${Math.round(i)}-${Math.round(i + incr - 1)}`] = 0;
+}
+raceCounts[`${range}+`] = 0;
+
+filteredData.forEach(function (d) {
+    // Find the appropriate range for Overtakes
+    for (var i = startValue; i < range; i += incr) {
+        if (d.stop >= i && d.stop <= i + incr) {
+            raceCounts[
+                `${Math.round(i)}-${Math.round(i + incr - 1)}`
+            ]++;
+            break; // Break out of the loop once the range is found
         }
-        raceCounts[`${range}+`] = 0;
-
-        filteredData.forEach(function (d) {
-            // Find the appropriate range for Overtakes
-            for (var i = 0; i < range; i += incr) {
-                if (d.stop >= i && d.stop <= i + incr) {
-                    raceCounts[
-                        `${Math.round(i)}-${Math.round(i + incr - 1)}`
-                    ]++;
-                    break; // Break out of the loop once the range is found
-                }
-            }
-            if (d.stop > range) {
-                // console.log(d.stop);
-                raceCounts[`${range}+`]++;
-            }
-        });
+    }
+    if (d.stop > range) {
+        // console.log(d.stop);
+        raceCounts[`${range}+`]++;
+    }
+});
 
         // Now, raceCounts will contain counts for each range of 5 from 0 to 50
         // console.log(raceCounts);
