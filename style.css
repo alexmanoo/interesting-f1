@@ -1,12 +1,19 @@
+html {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 body,
 #main-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     /* background-color: #b2beb5; */
     background-color: #cfcfc4;
-    width: 1700px;
+    width: 1500px;
 }
 
 #warning {
@@ -140,6 +147,9 @@ body,
     grid-gap: 10px; */
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .row-container {
@@ -147,8 +157,8 @@ body,
     flex-direction: row;
     justify-content: center;
     align-items: stretch;
-    width: 1900px;
-    margin-top: 20px;
+    /* width: 1900px; */
+    margin-top: 100px;
 }
 
 .grid-item {

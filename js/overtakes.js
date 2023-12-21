@@ -11,7 +11,7 @@ csv_data.then(() => {
         .style("padding", "10px"); // Set padding for content
 
     var margin = { top: 80, right: 50, bottom: 50, left: 40 },
-        width = 700 - margin.left - margin.right,
+        width = 600 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
     var x = d3.scaleBand().range([0, width]).padding(0.3);
