@@ -1,8 +1,8 @@
 csv_data.then(() => {
     // set the dimensions and margins of the graph
-    var margin = { top: 10, right: 30, bottom: 30, left: 60 },
-        width = 490 - margin.left - margin.right,
-        height = 440 - margin.top - margin.bottom;
+    var margin = { top: 80, right: 30, bottom: 30, left: 60 },
+        width = 500 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
 
     rerun();
 
@@ -114,6 +114,39 @@ csv_data.then(() => {
 
         // Add the Y Axis
         svg.append("g").call(d3.axisLeft(yScale));
-        
+
+        // Add title to the graph
+        // svg.append("text")
+        //     .attr("x", width / 2)
+        //     .attr("y", 0 - margin.top / 2)
+        //     .attr("text-anchor", "middle")
+        //     .style("font-size", "16px")
+        //     .style("text-decoration", "underline")
+        //     .text("Number of Wins by Championship Position");
+
+        // svg.append("text")
+        //     .attr("x", width / 2)
+        //     .attr("y", height + margin.bottom / 2)
+        //     .attr("text-anchor", "middle")
+        //     .style("font-size", "12px")
+        //     .text("Driver Championship Position");
+
+        // Add title to the graph
+        svg.append("text")
+            .attr("x", 0)
+            .attr("y", -margin.top / 2) // Adjust this value if needed
+            .attr("text-anchor", "left")
+            .style("font-size", "22px")
+            .text("Number of Wins by Championship Position"); // Replace with your actual title
+
+        // Add subtitle to the graph
+        svg.append("text")
+            .attr("x", 0)
+            .attr("y", -margin.top / 2 + 20) // Adjust this value if needed
+            .attr("text-anchor", "left")
+            .style("font-size", "14px")
+            .style("fill", "grey")
+            .style("max-width", 400)
+            .text("Shows the winners of selected races by their championship position.");
     }
 });

@@ -5,7 +5,7 @@ csv_data.then(() => {
         d3.select("#time_diffs").select("svg").remove();
 
         // Specify the chart’s dimensions.
-        const width = 600;
+        const width = 800;
         const height = 500;
         const marginTop = 80;
         const marginRight = 20;
@@ -48,14 +48,18 @@ csv_data.then(() => {
             .attr("text-anchor", "end")
             .text("Lap →");
 
-        svg.append("g")
+        const yAxis = svg.append("g")
             .attr("transform", `translate(${marginLeft},0)`)
             .call(d3.axisLeft(y))
+
+        yAxis
             .select(".domain")
             .remove()
+
+        yAxis
             .append("text")
             .attr("x", -marginLeft)
-            .attr("y", 10)
+            .attr("y", marginTop - 10)
             .attr("fill", "currentColor")
             .attr("text-anchor", "start")
             .text("↑ Time Difference (s)");
@@ -156,7 +160,7 @@ csv_data.then(() => {
 
         svg.append("text")
             .attr("x", marginLeft)
-            .attr("y", 60) // Adjust this value if needed
+            .attr("y", 55) // Adjust this value if needed
             .attr("text-anchor", "left")
             .style("font-size", "14px")
             .style("fill", "grey")

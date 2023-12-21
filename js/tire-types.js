@@ -78,7 +78,7 @@ csv_data.then(() => {
         // Add title to the graph
         svg.append("text")
             .attr("x", -250)
-            .attr("y", -250) // Adjust this value if needed
+            .attr("y", -270) // Adjust this value if needed
             .attr("text-anchor", "left")
             .style("font-size", "22px")
             .text("Tire types"); // Replace with your actual title
@@ -86,7 +86,7 @@ csv_data.then(() => {
         // Add subtitle to the graph
         svg.append("text")
             .attr("x", -250)
-            .attr("y", -220) // Adjust this value if needed
+            .attr("y", -240) // Adjust this value if needed
             .attr("text-anchor", "left")
             .style("font-size", "14px")
             .style("fill", "grey")
@@ -103,9 +103,9 @@ csv_data.then(() => {
             .append("svg")
             .attr("width", 200)
             .attr("height", height)
-            .append("g");
-        // .attr("transform",
-        //     "translate(" + -20 + "," + 50 + ")");
+            .append("g")
+        .attr("transform",
+            "translate(" + -70 + "," + 50 + ")");
 
         svg.selectAll("mydots")
             .data(data)

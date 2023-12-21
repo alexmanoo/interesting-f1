@@ -466,7 +466,7 @@ csv_data.then(() => {
     function name(d) {
         return d.parent
             ? d.name + " Status  " + "  - Click Here To Zoom Out"
-            : "Total Finish Status - Click And Expand A Category";
+            : "All Race Finish Statuses - Click To Expand A Category";
     }
 
     function nameSave(d) {

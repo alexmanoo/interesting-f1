@@ -1,8 +1,8 @@
 csv_data.then(() => {
     // set the dimensions and margins of the graph
-    var margin = { top: 10, right: 30, bottom: 30, left: 60 },
+    var margin = { top: 100, right: 30, bottom: 30, left: 60 },
         width = 490 - margin.left - margin.right,
-        height = 440 - margin.top - margin.bottom;
+        height = 500 - margin.top - margin.bottom;
 
     rerun();
 
@@ -125,5 +125,25 @@ csv_data.then(() => {
             .attr("y", -margin.left + 30)
             .attr("transform", "rotate(-90)")
             .text("Amount of times raced");
+
+        // Add title to the graph
+        svg.append("text")
+            .attr("x", -margin.left + 20)
+            .attr("y", -margin.top / 2) // Adjust this value if needed
+            .attr("text-anchor", "left")
+            .style("font-size", "22px")
+            .text("Time of races (round) in the season"); 
+
+        // Add subtitle to the graph
+        svg.append("text")
+            .attr("x", -margin.left + 20)
+            .attr("y", -margin.top / 2 + 20) // Adjust this value if needed
+            .attr("text-anchor", "left")
+            .style("font-size", "14px")
+            .style("fill", "grey")
+            .style("max-width", 400)
+            .text(
+                "Shows the amount of times raced (y axis) vs round (x axis). "
+            ); // Replace with your actual subtitle
     }
 });
