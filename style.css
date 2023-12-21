@@ -5,6 +5,11 @@ html {
     justify-content: center;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+}
+
 body,
 #main-container {
     display: flex;
@@ -121,14 +126,15 @@ body,
 }
 
 #sticky-header {
-    width: 100%;
+    width: 100vw;
     background-color: #cfcfc4;
     display: flex;
     justify-content: center;
     position: -webkit-sticky; /* Safari */
     position: sticky;
-    top: 0;
     margin-bottom: 5px;
+    top: 0;
+    padding-top: 10px;
 }
 
 #header-container {
