@@ -7,6 +7,7 @@ csv_data.then(() => {
     rerun();
 
     slider.onTouchEnd(rerun);
+    yearPicker.onChange(rerun);
 
     function rerun() {
         // Prepare the data for the bar chart
@@ -113,5 +114,6 @@ csv_data.then(() => {
 
         // Add the Y Axis
         svg.append("g").call(d3.axisLeft(yScale));
+        
     }
 });

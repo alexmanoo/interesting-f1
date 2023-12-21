@@ -5,7 +5,7 @@ csv_data.then(() => {
     const graphDimensions = {
         margin: { top: 10, right: 30, bottom: 20, left: 50 },
         width: 1280,
-        height: 400,
+        height: 250,
     };
     const { width, height, margin } = graphDimensions;
     const adjustedWidth = width - margin.left - margin.right;
@@ -109,7 +109,12 @@ function updateTLChart(
     yScale.domain([0, d3.max(data, (d) => d.count)]);
 
     svg.select(".x-axis").call(d3.axisBottom(xScale).tickSizeOuter(0));
-    svg.select(".y-axis").call(d3.axisLeft(yScale));
+    // svg.select(".y-axis").call(d3.axisLeft(yScale));
+    svg.select(".y-axis")
+    .call(d3.axisLeft(yScale)
+          .tickFormat(d3.format("d")) // Ensure integer formatting
+          .ticks(d3.max(data, (d) => d.count)) // Adjust tick count based on data
+    );
 
     // Stack the data
     const subgroups = ["count"];

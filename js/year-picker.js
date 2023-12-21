@@ -127,7 +127,6 @@ function createYearPicker() {
     }
 
     function runCallbacks() {
-        console.log("callbacks count: ", changeListeners.length);
         changeListeners.forEach((callback) => callback());
     }
 
@@ -155,12 +154,12 @@ function loadYearPickerData() {
     years = d3.group(years, (d) => d[1]);
 
     // Add missing years
-    // all_years.forEach((year) => {
-    //     year = year.toString();
-    //     if (!years.has(year)) {
-    //         years.set(year, []);
-    //     }
-    // });
+    all_years.forEach((year) => {
+        year = year.toString();
+        if (!years.has(year)) {
+            years.set(year, []);
+        }
+    });
 
     // Count the number of races for each year
     years = Array.from(years, ([key, value]) => [key, value.length]);

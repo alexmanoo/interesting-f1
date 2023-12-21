@@ -88,7 +88,6 @@ csv_data.then(() => {
                 return d.count;
             }),
         ]);
-        // ... (previous code)
 
         // Select existing bars and apply transitions
         var bars = svg.selectAll(".bar").data(barData);

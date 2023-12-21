@@ -123,7 +123,12 @@ function updateSafetyChart(
     yScale.domain([0, d3.max(data, (d) => d.safety_car + d.red_flag)]);
 
     svg.select(".x-axis").call(d3.axisBottom(xScale).tickSizeOuter(0));
-    svg.select(".y-axis").call(d3.axisLeft(yScale));
+    // svg.select(".y-axis").call(d3.axisLeft(yScale));
+    svg.select(".y-axis")
+    .call(d3.axisLeft(yScale)
+          .tickFormat(d3.format("d")) // Ensure integer formatting
+          .ticks(yScale.domain()[1]) // Adjust tick count based on data
+    );
 
     // Stack the data
     const subgroups = ["safety_car", "red_flag"];

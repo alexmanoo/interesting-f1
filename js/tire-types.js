@@ -16,6 +16,7 @@ csv_data.then(() => {
     rerun();
 
     slider.onTouchEnd(rerun);
+    yearPicker.onChange(rerun);
 
     function rerun() {
         // Extract data for the selected IDs
