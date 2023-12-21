@@ -1,8 +1,8 @@
 csv_data.then(() => {
     // set the dimensions and margins of the graph
-    var margin = { top: 10, right: 30, bottom: 30, left: 60 },
+    var margin = { top: 50, right: 30, bottom: 30, left: 60 },
         width = 500 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom;
+        height = 600 - margin.top - margin.bottom;
 
     let translate = {
         x: width / 2 + (margin.right + margin.left) / 2,
@@ -74,6 +74,26 @@ csv_data.then(() => {
 
         // Remove old arcs
         arcs.exit().remove();
+
+        // Add title to the graph
+        svg.append("text")
+            .attr("x", -250)
+            .attr("y", -250) // Adjust this value if needed
+            .attr("text-anchor", "left")
+            .style("font-size", "22px")
+            .text("Tire types"); // Replace with your actual title
+
+        // Add subtitle to the graph
+        svg.append("text")
+            .attr("x", -250)
+            .attr("y", -220) // Adjust this value if needed
+            .attr("text-anchor", "left")
+            .style("font-size", "14px")
+            .style("fill", "grey")
+            .style("max-width", 400)
+            .text(
+                "Shows the types of tires used in all laps from your selection. "
+            ); // Replace with your actual subtitle
 
         // Add legend for the pie chart
         d3.select("#pie-legend").select("svg").remove();

@@ -10,7 +10,7 @@ csv_data.then(() => {
         .style("border-radius", "10px")
         .style("padding", "10px"); // Set padding for content
 
-    var margin = { top: 50, right: 50, bottom: 50, left: 40 },
+    var margin = { top: 80, right: 50, bottom: 50, left: 40 },
         width = 700 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
@@ -30,14 +30,32 @@ csv_data.then(() => {
     var desiredIDs = ["3", "4", "5"];
 
     // Title for the bar chart
+    // svg.append("text")
+    //     .attr("x", width / 2 - 10)
+    //     .attr("y", height * 1.1)
+    //     .attr("text-anchor", "middle")
+    //     .style("font-size", 15 * (width / 500) + "px")
+    //     .style("font-family", "Helvetica")
+    //     .style("font-weight", "bold") // Add bold style
+    //     .text("Races vs. Number of Overtakes");
+
+    // Add title to the graph
     svg.append("text")
-        .attr("x", width / 2 - 10)
-        .attr("y", height * 1.1)
-        .attr("text-anchor", "middle")
-        .style("font-size", 15 * (width / 500) + "px")
-        .style("font-family", "Helvetica")
-        .style("font-weight", "bold") // Add bold style
-        .text("Races vs. Number of Overtakes");
+        .attr("x", 0)
+        .attr("y", -50) // Adjust this value if needed
+        .attr("text-anchor", "left")
+        .style("font-size", "22px")
+        .text("Races vs Number of overtakes"); // Replace with your actual title
+
+    // Add subtitle to the graph
+    svg.append("text")
+        .attr("x", 0)
+        .attr("y", -20) // Adjust this value if needed
+        .attr("text-anchor", "left")
+        .style("font-size", "14px")
+        .style("fill", "grey")
+        .style("max-width", 400)
+        .text("Shows intervals of number of overtakes (x axis) vs races (y axis). "); // Replace with your actual subtitle
 
     var filteredData;
     function updateHistrogram(bins) {

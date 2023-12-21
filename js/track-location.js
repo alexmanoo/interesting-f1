@@ -3,9 +3,9 @@ csv_data.then(() => {
 
     // Setup graph dimensions and margins
     const graphDimensions = {
-        margin: { top: 10, right: 30, bottom: 20, left: 50 },
+        margin: { top: 80, right: 30, bottom: 20, left: 50 },
         width: 1280,
-        height: 250,
+        height: 350,
     };
     const { width, height, margin } = graphDimensions;
     const adjustedWidth = width - margin.left - margin.right;
@@ -52,7 +52,7 @@ csv_data.then(() => {
             tooltip,
             adjustedHeight
         );
-    }
+    };
 
     // Slider event handling
     slider.onTouchEnd(changeTrackLocations);
@@ -61,13 +61,33 @@ csv_data.then(() => {
 
 // Functions for initializing SVG, Axes, Tooltip, and Graph Update
 function initializeTLCanvas(selector, width, height, margin) {
-    return d3
+    const svg = d3
         .select(selector)
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+    // Add title to the graph
+    svg.append("text")
+        .attr("x", 0)
+        .attr("y", -50) // Adjust this value if needed
+        .attr("text-anchor", "left")
+        .style("font-size", "22px")
+        .text("Track Location"); // Replace with your actual title
+
+    // Add subtitle to the graph
+    svg.append("text")
+        .attr("x", 0)
+        .attr("y", -20) // Adjust this value if needed
+        .attr("text-anchor", "left")
+        .style("font-size", "14px")
+        .style("fill", "grey")
+        .style("max-width", 400)
+        .text("Shows number of races from your selection grouped per circuit location."); // Replace with your actual subtitle
+
+    return svg;
 }
 
 function initializeTLAxes(svg, height, xScale, yScale) {
@@ -81,18 +101,20 @@ function initializeTLAxes(svg, height, xScale, yScale) {
 }
 
 function initializeTLTooltip(selector) {
-    return d3
-        .select(selector)
-        .append("div")
-        .style("opacity", 0)
-        .attr("class", "tooltip")
-        .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "2px")
-        .style("border-radius", "5px")
-        .style("padding", "5px")
-        // .style("width", "120px")
-        .style("position", "absolute");
+    return (
+        d3
+            .select(selector)
+            .append("div")
+            .style("opacity", 0)
+            .attr("class", "tooltip")
+            .style("background-color", "white")
+            .style("border", "solid")
+            .style("border-width", "2px")
+            .style("border-radius", "5px")
+            .style("padding", "5px")
+            // .style("width", "120px")
+            .style("position", "absolute")
+    );
 }
 
 function updateTLChart(
@@ -111,10 +133,11 @@ function updateTLChart(
 
     svg.select(".x-axis").call(d3.axisBottom(xScale).tickSizeOuter(0));
     // svg.select(".y-axis").call(d3.axisLeft(yScale));
-    svg.select(".y-axis")
-    .call(d3.axisLeft(yScale)
-          .tickFormat(d3.format("d")) // Ensure integer formatting
-          .ticks(d3.max(data, (d) => d.count)) // Adjust tick count based on data
+    svg.select(".y-axis").call(
+        d3
+            .axisLeft(yScale)
+            .tickFormat(d3.format("d")) // Ensure integer formatting
+            .ticks(d3.max(data, (d) => d.count)) // Adjust tick count based on data
     );
 
     // Stack the data
@@ -137,9 +160,7 @@ function updateTLChart(
         .attr("width", xScale.bandwidth())
         .attr("y", adjustedHeight)
         .attr("height", 0)
-        .on("mouseover", (event, d) =>
-            mouseoverHandlerTL(event, d, tooltip)
-        )
+        .on("mouseover", (event, d) => mouseoverHandlerTL(event, d, tooltip))
         .on("mousemove", (event, d) =>
             mousemoveHandlerSafety(event, d, tooltip)
         )
@@ -179,11 +200,8 @@ function loadTrackLocations() {
     return trackLocations;
 }
 
-
 function mouseoverHandlerTL(event, data, tooltip) {
     const subgroupName = d3.select(event.currentTarget.parentNode).datum().key;
     const subgroupValue = data.data[subgroupName];
-    tooltip
-        .html(`Count: ${subgroupValue}`)
-        .style("opacity", 1);
+    tooltip.html(`Count: ${subgroupValue}`).style("opacity", 1);
 }

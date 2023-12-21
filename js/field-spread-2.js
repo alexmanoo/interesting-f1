@@ -7,7 +7,7 @@ csv_data.then(() => {
         // Specify the chart’s dimensions.
         const width = 600;
         const height = 500;
-        const marginTop = 20;
+        const marginTop = 80;
         const marginRight = 20;
         const marginBottom = 30;
         const marginLeft = 50;
@@ -31,10 +31,6 @@ csv_data.then(() => {
             .attr("width", width)
             .attr("height", height)
             .attr("viewBox", [0, 0, width, height]);
-        // .attr(
-        //   "style",
-        //   "max-width: 100%; height: auto; overflow: visible; font: 10px sans-serif;"
-        // );
 
         // Add the axes
         svg.append("g")
@@ -139,6 +135,33 @@ csv_data.then(() => {
             svg.node().value = null;
             svg.dispatch("input", { bubbles: true });
         }
+
+        // Add title to the graph
+        svg.append("text")
+            .attr("x", marginLeft)
+            .attr("y", 20) // Adjust this value if needed
+            .attr("text-anchor", "left")
+            .style("font-size", "22px")
+            .text("Field spread"); // Replace with your actual title
+
+        // Add subtitle to the graph
+        svg.append("text")
+            .attr("x", marginLeft)
+            .attr("y", 40) // Adjust this value if needed
+            .attr("text-anchor", "left")
+            .style("font-size", "14px")
+            .style("fill", "grey")
+            .style("max-width", 400)
+            .text("Shows the difference in seconds between drivers in position 1 (P1) and position 2 (P2)"); // Replace with your actual subtitle
+
+        svg.append("text")
+            .attr("x", marginLeft)
+            .attr("y", 60) // Adjust this value if needed
+            .attr("text-anchor", "left")
+            .style("font-size", "14px")
+            .style("fill", "grey")
+            .style("max-width", 400)
+            .text("on the y-axis and the lap number on the x-axis."); // Replace with your actual subtitle
     }
 
     const onChangeSliderFS = (selectedColumn) => {

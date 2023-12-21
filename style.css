@@ -148,6 +148,7 @@ body,
     justify-content: center;
     align-items: stretch;
     width: 1900px;
+    margin-top: 20px;
 }
 
 .grid-item {

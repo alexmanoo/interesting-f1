@@ -4,7 +4,7 @@ csv_data.then(() => {
 
     // Setup graph dimensions and margins
     const graphDimensions = {
-        margin: { top: 10, right: 30, bottom: 20, left: 50 },
+        margin: { top: 90, right: 30, bottom: 20, left: 50 },
         width: 700,
         height: 500,
     };
@@ -75,13 +75,35 @@ csv_data.then(() => {
 
 // Functions for initializing SVG, Axes, Tooltip, and Graph Update
 function initializeSafetyCanvas(selector, width, height, margin) {
-    return d3
+    const svg = d3
         .select(selector)
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+    // Add title to the graph
+    svg.append("text")
+        .attr("x", 0)
+        .attr("y", -50) // Adjust this value if needed
+        .attr("text-anchor", "left")
+        .style("font-size", "22px")
+        .text("Safety Cars and Red Flags");
+
+    // Add subtitle to the graph
+    svg.append("text")
+        .attr("x", 0)
+        .attr("y", -20) // Adjust this value if needed
+        .attr("text-anchor", "left")
+        .style("font-size", "14px")
+        .style("fill", "grey")
+        .style("max-width", 400)
+        .text(
+            "Shows number of SCs and RFs from your selection, grouped per circuit location."
+        ); // Replace with your actual subtitle
+
+    return svg;
 }
 
 function initializeSafetyAxes(svg, height, xScale, yScale) {
@@ -106,7 +128,7 @@ function initializeSafetyTooltip(selector) {
         .style("border-radius", "5px")
         .style("padding", "5px")
         .style("position", "absolute");
-        // .style("width", "120px");
+    // .style("width", "120px");
 }
 
 function updateSafetyChart(
@@ -125,10 +147,11 @@ function updateSafetyChart(
 
     svg.select(".x-axis").call(d3.axisBottom(xScale).tickSizeOuter(0));
     // svg.select(".y-axis").call(d3.axisLeft(yScale));
-    svg.select(".y-axis")
-    .call(d3.axisLeft(yScale)
-          .tickFormat(d3.format("d")) // Ensure integer formatting
-          .ticks(yScale.domain()[1]) // Adjust tick count based on data
+    svg.select(".y-axis").call(
+        d3
+            .axisLeft(yScale)
+            .tickFormat(d3.format("d")) // Ensure integer formatting
+            .ticks(yScale.domain()[1]) // Adjust tick count based on data
     );
 
     // Stack the data
@@ -171,9 +194,7 @@ function updateSafetyChart(
 function mouseoverHandlerSafety(event, data, tooltip) {
     const subgroupName = d3.select(event.currentTarget.parentNode).datum().key;
     const subgroupValue = data.data[subgroupName];
-    tooltip
-        .html(`${subgroupName}s: ${subgroupValue}`)
-        .style("opacity", 1);
+    tooltip.html(`${subgroupName}s: ${subgroupValue}`).style("opacity", 1);
 }
 
 function mousemoveHandlerSafety(event, data, tooltip) {
