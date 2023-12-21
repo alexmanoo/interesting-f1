@@ -76,7 +76,7 @@ function createYearPicker() {
                 (year) => year != parseInt(d[0])
             );
         } else {
-            d3.select(this).style("stroke", "#004225").style("opacity", 1);
+            d3.select(this).style("stroke", "#708238").style("opacity", 1);
             selected_years.push(parseInt(d[0]));
             selected_years.sort((a, b) => a - b);
         }
@@ -104,7 +104,7 @@ function createYearPicker() {
         })
         .style("stroke-width", 4)
         .style("stroke", function (d) {
-            return selected_years.includes(parseInt(d[0])) ? "#004225" : "none";
+            return selected_years.includes(parseInt(d[0])) ? "#708238" : "none";
         })
         .style("opacity", function (d) {
             return selected_years.includes(parseInt(d[0])) ? 1 : 0.8;
