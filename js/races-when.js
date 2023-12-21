@@ -132,7 +132,7 @@ csv_data.then(() => {
             .attr("y", -margin.top / 2) // Adjust this value if needed
             .attr("text-anchor", "left")
             .style("font-size", "22px")
-            .text("Time of races (round) in the season"); 
+            .text("When races are in the season (round)"); 
 
         // Add subtitle to the graph
         svg.append("text")
