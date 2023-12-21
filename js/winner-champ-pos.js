@@ -116,33 +116,17 @@ csv_data.then(() => {
         svg.append("g").call(d3.axisLeft(yScale));
 
         // Add title to the graph
-        // svg.append("text")
-        //     .attr("x", width / 2)
-        //     .attr("y", 0 - margin.top / 2)
-        //     .attr("text-anchor", "middle")
-        //     .style("font-size", "16px")
-        //     .style("text-decoration", "underline")
-        //     .text("Number of Wins by Championship Position");
-
-        // svg.append("text")
-        //     .attr("x", width / 2)
-        //     .attr("y", height + margin.bottom / 2)
-        //     .attr("text-anchor", "middle")
-        //     .style("font-size", "12px")
-        //     .text("Driver Championship Position");
-
-        // Add title to the graph
         svg.append("text")
             .attr("x", 0)
-            .attr("y", -margin.top / 2) // Adjust this value if needed
+            .attr("y", -margin.top / 2)
             .attr("text-anchor", "left")
             .style("font-size", "22px")
-            .text("Number of Wins by Championship Position"); // Replace with your actual title
+            .text("Number of Wins by Championship Position");
 
         // Add subtitle to the graph
         svg.append("text")
             .attr("x", 0)
-            .attr("y", -margin.top / 2 + 20) // Adjust this value if needed
+            .attr("y", -margin.top / 2 + 20)
             .attr("text-anchor", "left")
             .style("font-size", "14px")
             .style("fill", "grey")

@@ -3,14 +3,6 @@ csv_data.then(() => {
     var obj = document.getElementById("dnf");
     var divWidth = obj.offsetWidth;
 
-    // Update the width and height variables based on your requirements
-    // For example, you might want to use the size of a specific container element
-    // var gridItem = document.querySelector(".grid-item");
-
-    // // Get the dimensions of the grid item
-    // var gridItemWidth = gridItem.clientWidth;
-    // var gridItemHeight = gridItem.clientHeight;
-
     var margin = { top: 40, right: 0, bottom: 0, left: 0 },
         width = 800,
         height = 600,
@@ -351,13 +343,6 @@ csv_data.then(() => {
         /* Adding a foreign object instead of a text object, allows for text wrapping */
         g.append("foreignObject")
             .call(rect)
-            /* open new window based on the json's URL value for leaf nodes */
-            /* Firefox displays this on top
-    	.on("click", function(d) {
-    		if(!d.children){
-    			window.open(d.url);
-    	}
-    })*/
             .attr("class", "foreignobj")
             .append("xhtml:div")
             .attr("dy", ".75em")
@@ -378,8 +363,8 @@ csv_data.then(() => {
             transitioning = true;
 
             var g2 = display(d),
-                t1 = g1.transition().duration(1),
-                t2 = g2.transition().duration(1);
+                t1 = g1.transition().duration(650),
+                t2 = g2.transition().duration(650);
 
             // Update the domain only after entering new elements.
             x.domain([d.x, d.x + d.dx]);

@@ -78,22 +78,22 @@ csv_data.then(() => {
         // Add title to the graph
         svg.append("text")
             .attr("x", -250)
-            .attr("y", -270) // Adjust this value if needed
+            .attr("y", -270)
             .attr("text-anchor", "left")
             .style("font-size", "22px")
-            .text("Tire types"); // Replace with your actual title
+            .text("Tire types");
 
         // Add subtitle to the graph
         svg.append("text")
             .attr("x", -250)
-            .attr("y", -240) // Adjust this value if needed
+            .attr("y", -240)
             .attr("text-anchor", "left")
             .style("font-size", "14px")
             .style("fill", "grey")
             .style("max-width", 400)
             .text(
                 "Shows the types of tires used in all laps from your selection. "
-            ); // Replace with your actual subtitle
+            );
 
         // Add legend for the pie chart
         d3.select("#pie-legend").select("svg").remove();
@@ -104,8 +104,7 @@ csv_data.then(() => {
             .attr("width", 200)
             .attr("height", height)
             .append("g")
-        .attr("transform",
-            "translate(" + -70 + "," + 50 + ")");
+            .attr("transform", "translate(" + -70 + "," + 50 + ")");
 
         svg.selectAll("mydots")
             .data(data)

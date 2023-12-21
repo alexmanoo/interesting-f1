@@ -1,3 +1,5 @@
+// NOTE: Adapted from https://github.com/RasmusFonseca/d3RangeSlider
+
 /**
  * Create a d3 range slider that selects ranges between `rangeMin` and `rangeMax`, and add it to the
  * `containerSelector`. The contents of the container is laid out as follows

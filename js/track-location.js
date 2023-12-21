@@ -72,20 +72,20 @@ function initializeTLCanvas(selector, width, height, margin) {
     // Add title to the graph
     svg.append("text")
         .attr("x", 0)
-        .attr("y", -50) // Adjust this value if needed
+        .attr("y", -50)
         .attr("text-anchor", "left")
         .style("font-size", "22px")
-        .text("Track Location"); // Replace with your actual title
+        .text("Track Location");
 
     // Add subtitle to the graph
     svg.append("text")
         .attr("x", 0)
-        .attr("y", -20) // Adjust this value if needed
+        .attr("y", -20)
         .attr("text-anchor", "left")
         .style("font-size", "14px")
         .style("fill", "grey")
         .style("max-width", 400)
-        .text("Shows number of races from your selection grouped per circuit location."); // Replace with your actual subtitle
+        .text("Shows number of races from your selection grouped per circuit location.");
 
     return svg;
 }
@@ -112,7 +112,6 @@ function initializeTLTooltip(selector) {
             .style("border-width", "2px")
             .style("border-radius", "5px")
             .style("padding", "5px")
-            // .style("width", "120px")
             .style("position", "absolute")
     );
 }
@@ -126,21 +125,18 @@ function updateTLChart(
     tooltip,
     adjustedHeight
 ) {
-    // Update the X and Y axes
     const raceNames = Array.from(new Set(data.map((d) => d.track_location)));
     xScale.domain(raceNames);
     yScale.domain([0, d3.max(data, (d) => d.count)]);
 
     svg.select(".x-axis").call(d3.axisBottom(xScale).tickSizeOuter(0));
-    // svg.select(".y-axis").call(d3.axisLeft(yScale));
     svg.select(".y-axis").call(
         d3
             .axisLeft(yScale)
-            .tickFormat(d3.format("d")) // Ensure integer formatting
-            .ticks(d3.max(data, (d) => d.count)) // Adjust tick count based on data
+            .tickFormat(d3.format("d"))
+            .ticks(d3.max(data, (d) => d.count))
     );
 
-    // Stack the data
     const subgroups = ["count"];
     const stackedData = d3.stack().keys(subgroups)(data);
 
@@ -166,10 +162,10 @@ function updateTLChart(
         )
         .on("mouseleave", () => mouseleaveHandlerSafety(tooltip))
         .transition()
-        .duration(800) // Set the duration of the transition
+        .duration(800)
         .attr("y", (d) => yScale(d[1]))
         .attr("height", (d) => yScale(d[0]) - yScale(d[1]))
-        .delay((d, i) => i * 100); // Optional: stagger the animations
+        .delay((d, i) => i * 100);
 }
 
 function loadTrackLocations() {

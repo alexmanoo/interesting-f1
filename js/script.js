@@ -1,6 +1,5 @@
 let races;
 let race_ratings;
-// races_dict containing race details (from races.csv) and ratings
 let races_dict;
 let safety_cars;
 let red_flags;
@@ -31,75 +30,12 @@ let csv_data = Promise.all([
     d3.csv("../data/time_diffs.csv"), // 5
     d3.csv("../data/overtakes_with_ids.csv"), // 6
     d3.csv("../data/pit_stops_total.csv"), // 7
-    d3.csv("../clean_data/tire_types.csv"), // 8
+    d3.csv("../data/tire_types.csv"), // 8
     d3.csv("../data/finish_status_with_ids.csv"), // 9
-    d3.csv("../clean_data/results_with_champ_pos.csv"), // 10
-    d3.csv("../clean_data/races_when.csv"), // 11
+    d3.csv("../data/results_with_champ_pos.csv"), // 10
+    d3.csv("../data/races_when.csv"), // 11
 ]).then(function (data) {
-    races = data[0];
-    race_ratings = data[1];
-    safety_cars = data[2];
-    red_flags = data[3];
-    time_diffs = data[4];
-    overtakes = data[5];
-    pitstops = data[6];
-    tire_types = data[7];
-    finish_stats = data[8];
-    results_with_champ_pos = data[9];
-    races_when = data[10];
-
-    time_diffs.forEach(function (d) {
-        d.raceId = +d.raceId;
-        d.lap = +d.lap;
-        d.p1_p2 = +d.p1_p2;
-        d.p2_p3 = +d.p2_p3;
-        d.p1_last = +d.p1_last;
-    });
-    safety_cars.forEach(function (d) {
-        d.raceId = +d.raceId;
-        d.count = +d.count;
-    });
-    overtakes.forEach(function (d) {
-        d.Overtakes = +d.Overtakes;
-        d.raceId = +d.raceId;
-    });
-    pitstops.forEach(function (d) {
-        d.raceId = +d.raceId;
-        d.stop = +d.stop;
-    });
-    finish_stats.forEach(function (d) {
-        d.raceId = +d.raceId;
-        d.Finished = +d.Finished;
-        d.Disqualified = +d.Disqualified;
-        d.Accident = +d.Accident;
-        d.Collision = +d.Collision;
-        d.Spunoff = +d.Spunoff;
-        d.Engine = +d.Engine;
-        d.Gearbox = +d.Gearbox;
-        d.Transmission = +d.Transmission;
-        d.Clutch = +d.Clutch;
-        d.Hydraulics = +d.Hydraulics;
-        d.Electrical = +d.Electrical;
-        d.Radiator = +d.Radiator;
-        d.Suspension = +d.Suspension;
-        d.Brakes = +d.Brakes;
-        d.Differential = +d.Differential;
-        d.Overheating = +d.Overheating;
-        d.Mechanical = +d.Mechanical;
-        d.Tyre = +d.Tyre;
-        d.DriverSeat = +d.DriverSeat;
-        d.Puncture = +d.Puncture;
-        d.Driveshaft = +d.Driveshaft;
-        d.Lap1 = +d.Lap1;
-        d.Laps2 = +d.Laps2;
-        d.Laps3 = +d.Laps3;
-        d.Laps4 = +d.Laps4;
-        d.Laps5 = +d.Laps5;
-        d.Laps6 = +d.Laps6;
-        d.Laps7 = +d.Laps7;
-        d.Laps8 = +d.Laps8;
-        d.Laps9 = +d.Laps9;
-    });
+    processAndParseData(data);
 
     races_dict = createRacesDict();
     current_raceIds = getFilteredRaceIds(
@@ -224,4 +160,71 @@ function getMinMaxYear() {
         }
     });
     return min_year + " - " + max_year;
+}
+
+function processAndParseData(data) {
+    races = data[0];
+    race_ratings = data[1];
+    safety_cars = data[2];
+    red_flags = data[3];
+    time_diffs = data[4];
+    overtakes = data[5];
+    pitstops = data[6];
+    tire_types = data[7];
+    finish_stats = data[8];
+    results_with_champ_pos = data[9];
+    races_when = data[10];
+
+    time_diffs.forEach(function (d) {
+        d.raceId = +d.raceId;
+        d.lap = +d.lap;
+        d.p1_p2 = +d.p1_p2;
+        d.p2_p3 = +d.p2_p3;
+        d.p1_last = +d.p1_last;
+    });
+    safety_cars.forEach(function (d) {
+        d.raceId = +d.raceId;
+        d.count = +d.count;
+    });
+    overtakes.forEach(function (d) {
+        d.Overtakes = +d.Overtakes;
+        d.raceId = +d.raceId;
+    });
+    pitstops.forEach(function (d) {
+        d.raceId = +d.raceId;
+        d.stop = +d.stop;
+    });
+    finish_stats.forEach(function (d) {
+        d.raceId = +d.raceId;
+        d.Finished = +d.Finished;
+        d.Disqualified = +d.Disqualified;
+        d.Accident = +d.Accident;
+        d.Collision = +d.Collision;
+        d.Spunoff = +d.Spunoff;
+        d.Engine = +d.Engine;
+        d.Gearbox = +d.Gearbox;
+        d.Transmission = +d.Transmission;
+        d.Clutch = +d.Clutch;
+        d.Hydraulics = +d.Hydraulics;
+        d.Electrical = +d.Electrical;
+        d.Radiator = +d.Radiator;
+        d.Suspension = +d.Suspension;
+        d.Brakes = +d.Brakes;
+        d.Differential = +d.Differential;
+        d.Overheating = +d.Overheating;
+        d.Mechanical = +d.Mechanical;
+        d.Tyre = +d.Tyre;
+        d.DriverSeat = +d.DriverSeat;
+        d.Puncture = +d.Puncture;
+        d.Driveshaft = +d.Driveshaft;
+        d.Lap1 = +d.Lap1;
+        d.Laps2 = +d.Laps2;
+        d.Laps3 = +d.Laps3;
+        d.Laps4 = +d.Laps4;
+        d.Laps5 = +d.Laps5;
+        d.Laps6 = +d.Laps6;
+        d.Laps7 = +d.Laps7;
+        d.Laps8 = +d.Laps8;
+        d.Laps9 = +d.Laps9;
+    });
 }

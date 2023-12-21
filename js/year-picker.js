@@ -18,11 +18,9 @@ function createYearPicker() {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // Labels of row and columns -> unique identifier of the column called 'group' and 'variable'
     const myGroups = Array.from(new Set(data.map((d) => d[0])));
     const myVars = [""];
 
-    // Build X scales and axis:
     const x = d3.scaleBand().range([0, width]).domain(myGroups).padding(0.2);
     svg.append("g")
         .style("font-size", 10)
@@ -31,7 +29,6 @@ function createYearPicker() {
         .select(".domain")
         .remove();
 
-    // Build Y scales and axis:
     const y = d3.scaleBand().range([height, 0]).domain(myVars).padding(0.05);
     svg.append("g")
         .style("font-size", 15)
@@ -45,7 +42,7 @@ function createYearPicker() {
         .interpolator(d3.interpolateInferno)
         .domain([0, 22]);
 
-    // create a tooltip
+    // create tooltip
     const tooltip = d3
         .select("#year-picker")
         .append("div")
@@ -58,7 +55,6 @@ function createYearPicker() {
         .style("padding", "5px")
         .style("position", "absolute");
 
-    // Three function that change the tooltip when user hover / move / leave a cell
     const mouseover = function (event, d) {
         tooltip.style("opacity", 1);
     };
@@ -183,7 +179,6 @@ function createYearPickerLegend(myColor, height) {
         .attr("width", 300)
         .attr("height", 50)
 
-    // 2. Create the Gradient
     svg.append("defs")
         .append("linearGradient")
         .attr("id", "legendGradient")
@@ -199,7 +194,6 @@ function createYearPickerLegend(myColor, height) {
         .attr("offset", (d) => d.offset)
         .attr("stop-color", (d) => d.color);
 
-    // 3. Add the Legend to the SVG
     svg.append("rect")
         .attr("x", legendPosition.x)
         .attr("y", legendPosition.y)
@@ -207,7 +201,6 @@ function createYearPickerLegend(myColor, height) {
         .attr("height", legendHeight)
         .style("fill", "url(#legendGradient)");
 
-    // 4. Create the Legend Axis
     var legendScale = d3
         .scaleLinear()
         .domain(myColor.domain())

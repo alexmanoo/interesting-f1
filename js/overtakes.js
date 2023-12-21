@@ -5,10 +5,10 @@ csv_data.then(() => {
         .attr("id", "tooltip")
         .style("position", "absolute")
         .style("opacity", 0)
-        .style("background-color", "#ffffff") // Set the background color
-        .style("border", "1px solid #000000") // Set the border
+        .style("background-color", "#ffffff")
+        .style("border", "1px solid #000000")
         .style("border-radius", "10px")
-        .style("padding", "10px"); // Set padding for content
+        .style("padding", "10px");
 
     var margin = { top: 80, right: 50, bottom: 50, left: 40 },
         width = 600 - margin.left - margin.right,
@@ -16,7 +16,7 @@ csv_data.then(() => {
 
     var x = d3.scaleBand().range([0, width]).padding(0.3);
     var y = d3.scaleLinear().range([height, 0]);
-    tooltip.style("font-size", 15 * (width / 1100) + "px"); // Set the desired font size for the text
+    tooltip.style("font-size", 15 * (width / 1100) + "px"); 
 
     var svg = d3
         .select("#overtakes")
@@ -26,36 +26,23 @@ csv_data.then(() => {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // Specify the desired IDs to include in the plot
-    var desiredIDs = ["3", "4", "5"];
-
-    // Title for the bar chart
-    // svg.append("text")
-    //     .attr("x", width / 2 - 10)
-    //     .attr("y", height * 1.1)
-    //     .attr("text-anchor", "middle")
-    //     .style("font-size", 15 * (width / 500) + "px")
-    //     .style("font-family", "Helvetica")
-    //     .style("font-weight", "bold") // Add bold style
-    //     .text("Races vs. Number of Overtakes");
-
     // Add title to the graph
     svg.append("text")
         .attr("x", 0)
-        .attr("y", -50) // Adjust this value if needed
+        .attr("y", -50)
         .attr("text-anchor", "left")
         .style("font-size", "22px")
-        .text("Races vs Number of overtakes"); // Replace with your actual title
+        .text("Races vs Number of overtakes");
 
     // Add subtitle to the graph
     svg.append("text")
         .attr("x", 0)
-        .attr("y", -20) // Adjust this value if needed
+        .attr("y", -20)
         .attr("text-anchor", "left")
         .style("font-size", "14px")
         .style("fill", "grey")
         .style("max-width", 400)
-        .text("Shows intervals of number of overtakes (x axis) vs races (y axis). "); // Replace with your actual subtitle
+        .text("Shows intervals of number of overtakes (x axis) vs races (y axis). ");
 
     var filteredData;
     function updateHistrogram(bins) {
@@ -176,16 +163,14 @@ csv_data.then(() => {
             .attr("x", function (d) {
                 return x(d.category) + x.bandwidth() / 2;
             })
-            .attr("y", height * 1.035) // Adjust the y position based on your preference
+            .attr("y", height * 1.035)
             .attr("text-anchor", "middle")
             .text(function (d) {
                 return d.category;
             })
-            .style("font-size", 26 * (width / 1500) + "px") // Adjust the font size as needed
+            .style("font-size", 26 * (width / 1500) + "px")
             .style("font-family", "Helvetica")
-            .style("transform", "rotate(0)"); // Rotate the labels for better visibility
-
-        // ... (remaining code)
+            .style("transform", "rotate(0)");
 
         svg.selectAll("g").remove();
 

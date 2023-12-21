@@ -1,159 +1,234 @@
 csv_data.then(() => {
-  let safetyData = updateSafetyData();
+    let safetyData = loadSafetyData(min_rating, max_rating);
 
-  // set the dimensions and margins of the graph
-  var margin = { top: 10, right: 30, bottom: 20, left: 50 },
-    width = 460 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    const graphDimensions = {
+        margin: { top: 90, right: 30, bottom: 20, left: 50 },
+        width: 700,
+        height: 500,
+    };
+    const { width, height, margin } = graphDimensions;
+    const adjustedWidth = width - margin.left - margin.right;
+    const adjustedHeight = height - margin.top - margin.bottom;
 
-  // append the svg object to the body of the page
-  var svg = d3
-    .select("#safety_stackedbarchart")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    const svg = initializeSafetyCanvas(
+        "#safety_stackedbarchart",
+        adjustedWidth,
+        adjustedHeight,
+        margin
+    );
 
-  // List of subgroups = header of the csv files = soil condition here
-  var subgroups = ["safety_car", "red_flag"];
+    const colorPalette = d3
+        .scaleOrdinal()
+        .domain(["safety_car", "red_flag"])
+        .range(["#377eb8", "#e41a1c"]);
 
-  // List of groups = species here = value of the first column called group -> I show them on the X axis
-  // var groups = d3.map(data, function(d){return(d.group)}).keys()
-  var groups = d3.group(safetyData, (d) => d.race_name).keys();
+    const xScale = d3.scaleBand().range([0, adjustedWidth]).padding(0.2);
+    const yScale = d3.scaleLinear().range([adjustedHeight, 0]);
+    initializeSafetyAxes(svg, adjustedHeight, xScale, yScale);
 
-  // Add X axis
-  const x = d3.scaleBand().domain(groups).range([0, width]).padding([0.2]);
-  svg
-    .append("g")
-    .attr("transform", `translate(0, ${height})`)
-    .call(d3.axisBottom(x).tickSizeOuter(0));
+    const tooltip = initializeSafetyTooltip("#safety_stackedbarchart");
 
-  // Add Y axis
-  const y = d3.scaleLinear().domain([0, 20]).range([height, 0]);
-  svg.append("g").call(d3.axisLeft(y));
+    updateSafetyChart(
+        safetyData,
+        svg,
+        colorPalette,
+        xScale,
+        yScale,
+        tooltip,
+        adjustedHeight
+    );
 
-  // color palette = one color per subgroup
-  const color = d3
-    .scaleOrdinal()
-    .domain(subgroups)
-    .range(["#377eb8", "#e41a1c"]);
-
-  //stack the data? --> stack per subgroup
-  const stackedData = d3.stack().keys(subgroups)(safetyData);
-
-  // ----------------
-  // Create the tooltip
-  // ----------------
-  const tooltip = d3
-    .select("#safety_stackedbarchart")
-    .append("div")
-    .style("opacity", 0)
-    .attr("class", "tooltip")
-    .style("background-color", "white")
-    .style("border", "solid")
-    .style("border-width", "1px")
-    .style("border-radius", "5px")
-    .style("padding", "10px")
-    .style("width", "120px");
-
-  // Three function that change the tooltip when user hover / move / leave a cell
-  const mouseover = function (event, d) {
-    const subgroupName = d3.select(this.parentNode).datum().key;
-    const subgroupValue = d.data[subgroupName];
-    tooltip
-      .html("Type: " + subgroupName + "<br>" + "Value: " + subgroupValue)
-      .style("opacity", 1);
-  };
-  const mousemove = function (event, d) {
-    tooltip
-      .style("transform", "translateY(-55%)")
-      .style("left", event.x / 4 + "px")
-      .style("top", event.y / 4 - 30 + "px");
-  };
-  const mouseleave = function (event, d) {
-    tooltip.style("opacity", 0);
-  };
-
-  // Show the bars
-  svg
-    .append("g")
-    .selectAll("g")
-    // Enter in the stack data = loop key per key = group per group
-    .data(stackedData)
-    .join("g")
-    .attr("fill", (d) => color(d.key))
-    .selectAll("rect")
-    // enter a second time = loop subgroup per subgroup to add all rectangles
-    .data((d) => d)
-    .join("rect")
-    .attr("x", (d) => x(d.data.race_name))
-    .attr("y", (d) => y(d[1]))
-    .attr("height", (d) => y(d[0]) - y(d[1]))
-    .attr("width", x.bandwidth())
-    .on("mouseover", mouseover)
-    .on("mousemove", mousemove)
-    .on("mouseleave", mouseleave);
-
-  function updateSafetyData() {
-    let filteredSafetyCars = safety_cars
-      .filter(function (d) {
-        return (
-          parseFloat(d.rating) != NaN &&
-          parseFloat(d.rating) >= min_rating &&
-          parseFloat(d.rating) <= max_rating
+    slider.onTouchEnd((newRange) => {
+        safetyData = loadSafetyData(newRange.begin, newRange.end);
+        updateSafetyChart(
+            safetyData,
+            svg,
+            colorPalette,
+            xScale,
+            yScale,
+            tooltip,
+            adjustedHeight
         );
-      })
-      .sort((a, b) => a.rating - b.rating);
-
-    // Calculate the number of safety cars per race_name
-    let safetyCarsDetailsPerRace = Object.groupBy(
-      filteredSafetyCars,
-      ({ race_name }) => race_name
-    );
-
-    let safetyCarsPerRace = Object.entries(safetyCarsDetailsPerRace).map(
-      ([r, details]) => {
-        return { race_name: r, safety_cars: details.length };
-      }
-    );
-
-    let filteredRedFlags = red_flags.filter(function (d) {
-      return (
-        parseFloat(d.rating) != NaN &&
-        parseFloat(d.rating) >= min_rating &&
-        parseFloat(d.rating) <= max_rating
-      );
     });
 
-    let redFlagsDetailsPerRace = Object.groupBy(
-      filteredRedFlags,
-      ({ race_name }) => race_name
-    );
-    let redFlagsPerRace = Object.entries(redFlagsDetailsPerRace).map(
-      ([r, details]) => {
-        return { race_name: r, red_flags: details.length };
-      }
-    );
-
-    let safetyData = safetyCarsPerRace.map((d) => {
-      return {
-        race_name: d.race_name,
-        safety_car: d.safety_cars,
-        red_flag: redFlagsPerRace.filter((r) => r.race_name == d.race_name)
-          .length,
-      };
+    yearPicker.onChange(() => {
+        safetyData = loadSafetyData(min_rating, max_rating);
+        updateSafetyChart(
+            safetyData,
+            svg,
+            colorPalette,
+            xScale,
+            yScale,
+            tooltip,
+            adjustedHeight
+        );
     });
-
-    return safetyData;
-  }
-
-  function updateGraph(safetyData) {
-  }
-
-  slider.onTouchEnd(function (newRange) {
-    onChangeSlider(newRange);
-    safetyData = updateSafetyData();
-    updateGraph(safetyData);
-  });
 });
+
+function initializeSafetyCanvas(selector, width, height, margin) {
+    const svg = d3
+        .select(selector)
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+    // Add title to the graph
+    svg.append("text")
+        .attr("x", 0)
+        .attr("y", -50)
+        .attr("text-anchor", "left")
+        .style("font-size", "22px")
+        .text("Safety Cars and Red Flags");
+
+    // Add subtitle to the graph
+    svg.append("text")
+        .attr("x", 0)
+        .attr("y", -20)
+        .attr("text-anchor", "left")
+        .style("font-size", "14px")
+        .style("fill", "grey")
+        .style("max-width", 400)
+        .text(
+            "Shows number of SCs and RFs from your selection, grouped per circuit location."
+        );
+    return svg;
+}
+
+function initializeSafetyAxes(svg, height, xScale, yScale) {
+    svg.append("g")
+        .attr("transform", `translate(0, ${height})`)
+        .attr("class", "x-axis")
+        .call(d3.axisBottom(xScale));
+    svg.append("g")
+        .attr("class", "y-axis")
+        .call(d3.axisLeft(yScale).tickFormat(d3.format("d")));
+}
+
+function initializeSafetyTooltip(selector) {
+    return d3
+        .select(selector)
+        .append("div")
+        .style("opacity", 0)
+        .attr("class", "tooltip")
+        .style("background-color", "white")
+        .style("border", "solid")
+        .style("border-width", "2px")
+        .style("border-radius", "5px")
+        .style("padding", "5px")
+        .style("position", "absolute");
+}
+
+function updateSafetyChart(
+    data,
+    svg,
+    color,
+    xScale,
+    yScale,
+    tooltip,
+    adjustedHeight
+) {
+    const raceNames = Array.from(new Set(data.map((d) => d.race_name)));
+    xScale.domain(raceNames);
+    yScale.domain([0, d3.max(data, (d) => d.safety_car + d.red_flag)]);
+
+    svg.select(".x-axis").call(d3.axisBottom(xScale).tickSizeOuter(0));
+    svg.select(".y-axis").call(
+        d3.axisLeft(yScale).tickFormat(d3.format("d")).ticks(yScale.domain()[1])
+    );
+
+    const subgroups = ["safety_car", "red_flag"];
+    const stackedData = d3.stack().keys(subgroups)(data);
+
+    // Update bars
+    const barGroups = svg
+        .selectAll(".barGroup")
+        .data(stackedData)
+        .join("g")
+        .attr("class", "barGroup")
+        .attr("fill", (d) => color(d.key));
+
+    barGroups
+        .selectAll("rect")
+        .data((d) => d)
+        .join("rect")
+        .attr("x", (d) => xScale(d.data.race_name))
+        .attr("width", xScale.bandwidth())
+        .attr("y", adjustedHeight)
+        .attr("height", 0)
+        .on("mouseover", (event, d) =>
+            mouseoverHandlerSafety(event, d, tooltip)
+        )
+        .on("mousemove", (event, d) =>
+            mousemoveHandlerSafety(event, d, tooltip)
+        )
+        .on("mouseleave", () => mouseleaveHandlerSafety(tooltip))
+        .transition()
+        .duration(800)
+        .attr("y", (d) => yScale(d[1]))
+        .attr("height", (d) => yScale(d[0]) - yScale(d[1]))
+        .delay((d, i) => i * 100);
+}
+
+// Mouse event handlers for the tooltip
+function mouseoverHandlerSafety(event, data, tooltip) {
+    const subgroupName = d3.select(event.currentTarget.parentNode).datum().key;
+    const subgroupValue = data.data[subgroupName];
+    tooltip.html(`${subgroupName}s: ${subgroupValue}`).style("opacity", 1);
+}
+
+function mousemoveHandlerSafety(event, data, tooltip) {
+    tooltip
+        .style("left", `${event.x + 30}px`)
+        .style("top", `${event.y + 30}px`);
+}
+
+function mouseleaveHandlerSafety(tooltip) {
+    tooltip.style("opacity", 0);
+}
+
+function loadSafetyData() {
+    const filterAndSortData = (data) =>
+        data.filter((d) => current_raceIds.includes(parseInt(d.raceId)));
+
+    const groupDataByRace = (data) => {
+        return data.reduce((acc, curr) => {
+            const raceName = curr.race_name;
+            if (!acc[raceName]) {
+                acc[raceName] = [];
+            }
+            acc[raceName].push(curr);
+            return acc;
+        }, {});
+    };
+
+    const countEventsPerRace = (groupedData) => {
+        return Object.entries(groupedData).map(([raceName, events]) => ({
+            race_name: raceName,
+            count: events.length,
+        }));
+    };
+
+    const combineSafetyCarsAndRedFlags = (safetyCars, redFlags) => {
+        return safetyCars.map((sc) => ({
+            race_name: sc.race_name.replace("Grand Prix", "GP").trim(),
+            safety_car: sc.count,
+            red_flag: (
+                redFlags.find((rf) => rf.race_name === sc.race_name) || {
+                    count: 0,
+                }
+            ).count,
+        }));
+    };
+
+    const filteredSafetyCars = filterAndSortData(safety_cars);
+    const groupedSafetyCars = groupDataByRace(filteredSafetyCars);
+    const safetyCarsPerRace = countEventsPerRace(groupedSafetyCars);
+
+    const filteredRedFlags = filterAndSortData(red_flags);
+    const groupedRedFlags = groupDataByRace(filteredRedFlags);
+    const redFlagsPerRace = countEventsPerRace(groupedRedFlags);
+
+    return combineSafetyCarsAndRedFlags(safetyCarsPerRace, redFlagsPerRace);
+}

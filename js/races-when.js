@@ -129,21 +129,21 @@ csv_data.then(() => {
         // Add title to the graph
         svg.append("text")
             .attr("x", -margin.left + 20)
-            .attr("y", -margin.top / 2) // Adjust this value if needed
+            .attr("y", -margin.top / 2)
             .attr("text-anchor", "left")
             .style("font-size", "22px")
-            .text("When races are in the season (round)"); 
+            .text("When races are in the season (round)");
 
         // Add subtitle to the graph
         svg.append("text")
             .attr("x", -margin.left + 20)
-            .attr("y", -margin.top / 2 + 20) // Adjust this value if needed
+            .attr("y", -margin.top / 2 + 20)
             .attr("text-anchor", "left")
             .style("font-size", "14px")
             .style("fill", "grey")
             .style("max-width", 400)
             .text(
                 "Shows the amount of times raced (y axis) vs round (x axis). "
-            ); // Replace with your actual subtitle
+            );
     }
 });
