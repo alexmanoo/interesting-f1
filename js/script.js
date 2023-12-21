@@ -162,10 +162,13 @@ function createRacesDict() {
     // Take races data and create a dictionary with raceId as key
     let r_dict = {};
     races.forEach(function (d) {
+        if (d.raceId == 1100 || d.raceId == 1039) return;
+
         r_dict[d.raceId] = d;
     });
 
     race_ratings.forEach(function (d) {
+        if (d.raceId == 1100 || d.raceId == 1039) return;
         // Add race rating to r_dict for races that have a rating
         r_dict[d.raceId].rating = +d["RATING"];
     });
