@@ -102,10 +102,11 @@ function initializeSafetyTooltip(selector) {
         .attr("class", "tooltip")
         .style("background-color", "white")
         .style("border", "solid")
-        .style("border-width", "1px")
+        .style("border-width", "2px")
         .style("border-radius", "5px")
-        .style("padding", "10px")
-        .style("width", "120px");
+        .style("padding", "5px")
+        .style("position", "absolute");
+        // .style("width", "120px");
 }
 
 function updateSafetyChart(
@@ -171,15 +172,15 @@ function mouseoverHandlerSafety(event, data, tooltip) {
     const subgroupName = d3.select(event.currentTarget.parentNode).datum().key;
     const subgroupValue = data.data[subgroupName];
     tooltip
-        .html(`Type: ${subgroupName}<br>Value: ${subgroupValue}`)
+        .html(`${subgroupName}s: ${subgroupValue}`)
         .style("opacity", 1);
 }
 
 function mousemoveHandlerSafety(event, data, tooltip) {
     tooltip
-        .style("transform", "translateY(-55%)")
-        .style("left", `${event.x / 4}px`)
-        .style("top", `${event.y / 4 - 30}px`);
+        // .style("transform", "translateY(-55%)")
+        .style("left", `${event.x + 30}px`)
+        .style("top", `${event.y + 30}px`);
 }
 
 function mouseleaveHandlerSafety(tooltip) {

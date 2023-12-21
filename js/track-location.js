@@ -88,10 +88,11 @@ function initializeTLTooltip(selector) {
         .attr("class", "tooltip")
         .style("background-color", "white")
         .style("border", "solid")
-        .style("border-width", "1px")
+        .style("border-width", "2px")
         .style("border-radius", "5px")
-        .style("padding", "10px")
-        .style("width", "120px");
+        .style("padding", "5px")
+        // .style("width", "120px")
+        .style("position", "absolute");
 }
 
 function updateTLChart(
@@ -137,7 +138,7 @@ function updateTLChart(
         .attr("y", adjustedHeight)
         .attr("height", 0)
         .on("mouseover", (event, d) =>
-            mouseoverHandlerSafety(event, d, tooltip)
+            mouseoverHandlerTL(event, d, tooltip)
         )
         .on("mousemove", (event, d) =>
             mousemoveHandlerSafety(event, d, tooltip)
@@ -176,4 +177,13 @@ function loadTrackLocations() {
     const trackLocations = countEventsPerRace(groupDataByRace(selectedRaces));
 
     return trackLocations;
+}
+
+
+function mouseoverHandlerTL(event, data, tooltip) {
+    const subgroupName = d3.select(event.currentTarget.parentNode).datum().key;
+    const subgroupValue = data.data[subgroupName];
+    tooltip
+        .html(`Count: ${subgroupValue}`)
+        .style("opacity", 1);
 }
