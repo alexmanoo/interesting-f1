@@ -8,6 +8,7 @@ function createYearPicker() {
         height = 100 - margin.top - margin.bottom;
 
     d3.select("#year-picker").select("svg").remove();
+    d3.select("#year-picker").select("svg").remove();
 
     var svg = d3
         .select("#year-picker")
@@ -118,6 +119,7 @@ function createYearPicker() {
         .on("click", mouseclick);
 
     runCallbacks();
+    createYearPickerLegend(myColor, height);
 
     function onChange(callback) {
         changeListeners.push(callback);
@@ -167,4 +169,50 @@ function loadYearPickerData() {
     years.sort((a, b) => a[0] - b[0]);
 
     return years;
+}
+
+function createYearPickerLegend(myColor, height) {
+    var margin = { top: 30, right: 25, bottom: 30, left: 40 };
+    var legendWidth = 200;
+    var legendHeight = 20;
+    var legendPosition = { x: margin.left, y: height + margin.top + 20 };
+
+    var svg = d3.select("#year-picker").append("svg");
+
+    // 2. Create the Gradient
+    svg.append("defs")
+        .append("linearGradient")
+        .attr("id", "legendGradient")
+        .selectAll("stop")
+        .data(
+            myColor.ticks(10).map((t, i, n) => ({
+                offset: `${(100 * i) / n.length}%`,
+                color: myColor(t),
+            }))
+        )
+        .enter()
+        .append("stop")
+        .attr("offset", (d) => d.offset)
+        .attr("stop-color", (d) => d.color);
+
+    // 3. Add the Legend to the SVG
+    svg.append("rect")
+        .attr("x", legendPosition.x)
+        .attr("y", legendPosition.y)
+        .attr("width", legendWidth)
+        .attr("height", legendHeight)
+        .style("fill", "url(#legendGradient)");
+
+    // 4. Create the Legend Axis
+    var legendScale = d3
+        .scaleLinear()
+        .domain(myColor.domain())
+        .range([0, legendWidth]);
+
+    svg.append("g")
+        .attr(
+            "transform",
+            `translate(${legendPosition.x}, ${legendPosition.y + legendHeight})`
+        )
+        .call(d3.axisBottom(legendScale).tickSize(3).ticks(10));
 }
