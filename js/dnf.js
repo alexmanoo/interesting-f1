@@ -378,8 +378,8 @@ csv_data.then(() => {
             transitioning = true;
 
             var g2 = display(d),
-                t1 = g1.transition().duration(650),
-                t2 = g2.transition().duration(650);
+                t1 = g1.transition().duration(1),
+                t2 = g2.transition().duration(1);
 
             // Update the domain only after entering new elements.
             x.domain([d.x, d.x + d.dx]);
