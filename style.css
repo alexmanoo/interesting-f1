@@ -4,7 +4,8 @@ body,
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #b2beb5;
+    /* background-color: #b2beb5; */
+    background-color: #cfcfc4;
     width: 1700px;
 }
 
@@ -81,6 +82,7 @@ body,
 
 #range-label {
     text-align: center;
+    font-size: 20px;
 }
 
 #chart {
@@ -113,7 +115,7 @@ body,
 
 #sticky-header {
     width: 100%;
-    background-color: #b2beb5;
+    background-color: #cfcfc4;
     display: flex;
     justify-content: center;
     position: -webkit-sticky; /* Safari */
@@ -124,7 +126,7 @@ body,
 
 #header-container {
     width: 1000px;
-    background-color: #b2beb5;
+    background-color: #cfcfc4;
 
     display: flex;
     flex-flow: column;
@@ -240,4 +242,9 @@ rect.parent,
     margin: 0 0 4px;
     padding: 0px;
     font-size: 15px;
+}
+
+#current-races-count {
+    font-size: 20px;
+    font-weight: bold;
 }

@@ -7,8 +7,8 @@ function createYearPicker() {
         width = 600 - margin.left - margin.right,
         height = 100 - margin.top - margin.bottom;
 
-    d3.select("#year-picker").select("svg").remove();
-    d3.select("#year-picker").select("svg").remove();
+        d3.select("#year-picker").select("svg").remove();
+        d3.select("#year-picker").select("svg").remove();
 
     var svg = d3
         .select("#year-picker")
@@ -23,7 +23,7 @@ function createYearPicker() {
     const myVars = [""];
 
     // Build X scales and axis:
-    const x = d3.scaleBand().range([0, width]).domain(myGroups).padding(0.05);
+    const x = d3.scaleBand().range([0, width]).domain(myGroups).padding(0.2);
     svg.append("g")
         .style("font-size", 10)
         .attr("transform", `translate(0, ${height})`)
@@ -80,7 +80,7 @@ function createYearPicker() {
                 (year) => year != parseInt(d[0])
             );
         } else {
-            d3.select(this).style("stroke", "black").style("opacity", 1);
+            d3.select(this).style("stroke", "#004225").style("opacity", 1);
             selected_years.push(parseInt(d[0]));
             selected_years.sort((a, b) => a - b);
         }
@@ -108,7 +108,7 @@ function createYearPicker() {
         })
         .style("stroke-width", 4)
         .style("stroke", function (d) {
-            return selected_years.includes(parseInt(d[0])) ? "black" : "none";
+            return selected_years.includes(parseInt(d[0])) ? "#004225" : "none";
         })
         .style("opacity", function (d) {
             return selected_years.includes(parseInt(d[0])) ? 1 : 0.8;
@@ -172,12 +172,17 @@ function loadYearPickerData() {
 }
 
 function createYearPickerLegend(myColor, height) {
-    var margin = { top: 30, right: 25, bottom: 30, left: 40 };
+
+    var margin = { top: 30, right: 25, bottom: 30, left: 40 }
     var legendWidth = 200;
     var legendHeight = 20;
-    var legendPosition = { x: margin.left, y: height + margin.top + 20 };
+    var legendPosition = { x: margin.left, y: height - legendHeight - margin.bottom };
 
-    var svg = d3.select("#year-picker").append("svg");
+    var svg = d3
+        .select("#year-picker")
+        .append("svg")
+        .attr("width", 300)
+        .attr("height", 50)
 
     // 2. Create the Gradient
     svg.append("defs")
