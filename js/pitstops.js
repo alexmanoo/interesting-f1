@@ -17,7 +17,7 @@ csv_data.then(() => {
         .style("border-radius", "10px")
         .style("padding", "10px");
 
-    tooltip.style("font-size", 15 * (width / 1100) + "px");
+    tooltip.style("font-size", 15 + "px");
 
     var svg = d3
         .select("#pitstops")

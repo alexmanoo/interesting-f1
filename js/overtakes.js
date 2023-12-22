@@ -16,7 +16,7 @@ csv_data.then(() => {
 
     var x = d3.scaleBand().range([0, width]).padding(0.3);
     var y = d3.scaleLinear().range([height, 0]);
-    tooltip.style("font-size", 15 * (width / 1100) + "px"); 
+    tooltip.style("font-size", 15+ "px"); 
 
     var svg = d3
         .select("#overtakes")
