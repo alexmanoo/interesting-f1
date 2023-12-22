@@ -45,13 +45,12 @@ csv_data.then(() => {
             .attr("text-anchor", "end")
             .text("Lap →");
 
-        const yAxis = svg.append("g")
+        const yAxis = svg
+            .append("g")
             .attr("transform", `translate(${marginLeft},0)`)
-            .call(d3.axisLeft(y))
+            .call(d3.axisLeft(y));
 
-        yAxis
-            .select(".domain")
-            .remove()
+        yAxis.select(".domain").remove();
 
         yAxis
             .append("text")
@@ -134,7 +133,7 @@ csv_data.then(() => {
         // Add title to the graph
         svg.append("text")
             .attr("x", marginLeft)
-            .attr("y", 20) 
+            .attr("y", 20)
             .attr("text-anchor", "left")
             .style("font-size", "22px")
             .text("Field spread");
@@ -147,7 +146,9 @@ csv_data.then(() => {
             .style("font-size", "14px")
             .style("fill", "grey")
             .style("max-width", 400)
-            .text("Shows the difference in seconds between drivers in position 1 (P1) and position 2 (P2)");
+            .text(
+                "Shows the difference in seconds between drivers in position 1 (P1) and position 2 (P2) on the y-axis"
+            );
 
         svg.append("text")
             .attr("x", marginLeft)
@@ -156,7 +157,7 @@ csv_data.then(() => {
             .style("font-size", "14px")
             .style("fill", "grey")
             .style("max-width", 400)
-            .text("on the y-axis and the lap number on the x-axis.");
+            .text("and the lap number on the x-axis. Click the buttons to see the difference between other positions.");
     }
 
     const onChangeSliderFS = (selectedColumn) => {
