@@ -1,6 +1,6 @@
 csv_data.then(() => {
     // set the dimensions and margins of the graph
-    var margin = { top: 80, right: 30, bottom: 30, left: 60 },
+    var margin = { top: 100, right: 30, bottom: 30, left: 60 },
         width = 500 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
 
@@ -121,7 +121,7 @@ csv_data.then(() => {
             .attr("y", -margin.top / 2)
             .attr("text-anchor", "left")
             .style("font-size", "22px")
-            .text("Number of Wins by Championship Position");
+            .text("Championship position of race winner");
 
         // Add subtitle to the graph
         svg.append("text")
@@ -131,6 +131,19 @@ csv_data.then(() => {
             .style("font-size", "14px")
             .style("fill", "grey")
             .style("max-width", 400)
-            .text("Shows the winners of selected races by their championship position.");
+            .text(
+                "Shows the race winner's position in the championship at the time of the"
+            );
+
+        svg.append("text")
+            .attr("x", 0)
+            .attr("y", -margin.top / 2 + 40)
+            .attr("text-anchor", "left")
+            .style("font-size", "14px")
+            .style("fill", "grey")
+            .style("max-width", 400)
+            .text(
+                "race (x axis), summed by position for your race selection (y-axis)."
+            );
     }
 });
