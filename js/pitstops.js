@@ -192,7 +192,7 @@ csv_data.then(() => {
         svg.append("g")
             .call(d3.axisLeft(y))
             .selectAll("text")
-            .style("font-size", 28 * (width / 1500) + "px");
+            .style("font-size", 13 + "px");
     }
 
     function changeRaceList() {

@@ -168,7 +168,7 @@ csv_data.then(() => {
             .text(function (d) {
                 return d.category;
             })
-            .style("font-size", 26 * (width / 1500) + "px")
+            .style("font-size", 13 + "px")
             .style("font-family", "Helvetica")
             .style("transform", "rotate(0)");
 
