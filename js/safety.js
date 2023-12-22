@@ -2,7 +2,7 @@ csv_data.then(() => {
     let safetyData = loadSafetyData(min_rating, max_rating);
 
     const graphDimensions = {
-        margin: { top: 90, right: 30, bottom: 20, left: 50 },
+        margin: { top: 90, right: 30, bottom: 70, left: 50 },
         width: 700,
         height: 500,
     };
@@ -134,6 +134,12 @@ function updateSafetyChart(
     yScale.domain([0, d3.max(data, (d) => d.safety_car + d.red_flag)]);
 
     svg.select(".x-axis").call(d3.axisBottom(xScale).tickSizeOuter(0));
+    svg.select(".x-axis")
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-70)");
     svg.select(".y-axis").call(
         d3.axisLeft(yScale).tickFormat(d3.format("d")).ticks(yScale.domain()[1])
     );

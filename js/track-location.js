@@ -3,7 +3,7 @@ csv_data.then(() => {
 
     // Setup graph dimensions and margins
     const graphDimensions = {
-        margin: { top: 80, right: 30, bottom: 20, left: 50 },
+        margin: { top: 80, right: 30, bottom: 95, left: 50 },
         width: 1280,
         height: 350,
     };
@@ -85,7 +85,9 @@ function initializeTLCanvas(selector, width, height, margin) {
         .style("font-size", "14px")
         .style("fill", "grey")
         .style("max-width", 400)
-        .text("Shows number of races from your selection grouped per circuit location.");
+        .text(
+            "Shows number of races from your selection grouped per circuit location."
+        );
 
     return svg;
 }
@@ -101,19 +103,17 @@ function initializeTLAxes(svg, height, xScale, yScale) {
 }
 
 function initializeTLTooltip(selector) {
-    return (
-        d3
-            .select(selector)
-            .append("div")
-            .style("opacity", 0)
-            .attr("class", "tooltip")
-            .style("background-color", "white")
-            .style("border", "solid")
-            .style("border-width", "2px")
-            .style("border-radius", "5px")
-            .style("padding", "5px")
-            .style("position", "absolute")
-    );
+    return d3
+        .select(selector)
+        .append("div")
+        .style("opacity", 0)
+        .attr("class", "tooltip")
+        .style("background-color", "white")
+        .style("border", "solid")
+        .style("border-width", "2px")
+        .style("border-radius", "5px")
+        .style("padding", "5px")
+        .style("position", "absolute");
 }
 
 function updateTLChart(
@@ -130,6 +130,12 @@ function updateTLChart(
     yScale.domain([0, d3.max(data, (d) => d.count)]);
 
     svg.select(".x-axis").call(d3.axisBottom(xScale).tickSizeOuter(0));
+    svg.select(".x-axis")
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-70)");
     svg.select(".y-axis").call(
         d3
             .axisLeft(yScale)
@@ -182,7 +188,7 @@ function loadTrackLocations() {
 
     const countEventsPerRace = (groupedData) => {
         return Object.entries(groupedData).map(([raceName, events]) => ({
-            track_location: raceName.replace("Grand Prix", "").trim(),
+            track_location: raceName.replace("Grand Prix", "GP").trim(),
             count: events.length,
         }));
     };
