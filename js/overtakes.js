@@ -45,7 +45,7 @@ csv_data.then(() => {
         .text("Shows intervals of number of overtakes (x axis) vs races (y axis). ");
 
     var filteredData;
-    function updateHistrogram(bins) {
+    function updateHistogram(bins) {
         var range = 80;
         var incr = range / bins;
 
@@ -189,10 +189,10 @@ csv_data.then(() => {
         filteredData = overtakes.filter(function (d) {
             return current_raceIds.includes(d.raceId);
         });
-        updateHistrogram(12);
+        updateHistogram(12);
     }
     changeRaceList();
-    updateHistrogram(12);
+    updateHistogram(12);
     slider.onTouchEnd(changeRaceList);
     yearPicker.onChange(changeRaceList);
 });
